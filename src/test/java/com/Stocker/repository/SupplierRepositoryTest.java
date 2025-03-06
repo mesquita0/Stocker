@@ -75,7 +75,7 @@ public class SupplierRepositoryTest {
     @DisplayName("Atualiza Fornecedor")
     void updateSupplier() {
         mockSupplier.setId(supplierRepository.get(mockSupplier.getId()).getId());
-        mockSupplier.setName("Lucas");
+        mockSupplier.setName("test");
         supplierRepository.update(mockSupplier);
 
         Supplier returnSupplier = supplierRepository.get(mockSupplier.getId());

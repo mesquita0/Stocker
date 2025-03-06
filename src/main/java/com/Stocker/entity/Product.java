@@ -25,5 +25,14 @@ public class Product {
     private User user;
 
     @ManyToMany(mappedBy = "products")
-    List<Supplier> suppliers;   
+    List<Supplier> suppliers;
+
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }   
 }
