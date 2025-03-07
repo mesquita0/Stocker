@@ -85,7 +85,7 @@ public class SupplierRepositoryTest {
     @Order(3)
     @DisplayName("Lista Fornecedores")
     void listSupplier() {
-        List<Supplier> returnSuppliers = supplierRepository.getAll();
+        List<Supplier> returnSuppliers = supplierRepository.getAll(mockUser);
 
         assertNotEquals(returnSuppliers.size(), 0);
     }
@@ -95,6 +95,7 @@ public class SupplierRepositoryTest {
     @DisplayName("Lista Fornecedores por nome")
     void listSupplierByName() {
         List<Supplier> returnSuppliers = supplierRepository.getAll(
+            mockUser,
             mockName.substring(0, mockName.length() - 1)
         );
 
