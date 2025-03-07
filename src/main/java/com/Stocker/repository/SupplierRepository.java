@@ -32,7 +32,7 @@ public class SupplierRepository extends BaseRepository<Supplier, Long> {
             StringBuilder sb = new StringBuilder();
             sb.append("FROM Supplier s ");
 
-            if (product != null) sb.append("JOIN s.products p WHERE p.id=:p_id");
+            if (product != null) sb.append("JOIN s.products p WHERE p.product.id=:p_id");
             if (name != null) {
                 if (product != null) sb.append(" AND ");
                 else sb.append("WHERE ");

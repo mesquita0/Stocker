@@ -24,6 +24,7 @@
 
         <!-- Entities -->
         <mapping class="com.Stocker.entity.Product"/>
+        <mapping class="com.Stocker.entity.SupplierProduct"/>
         <mapping class="com.Stocker.entity.Supplier"/>
         <mapping class="com.Stocker.entity.User"/>
     </session-factory>

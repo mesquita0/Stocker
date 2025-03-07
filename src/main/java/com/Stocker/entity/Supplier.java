@@ -2,14 +2,11 @@ package com.Stocker.entity;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,18 +20,13 @@ public class Supplier {
 
     private String cnpj;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-        name = "supplier_product", 
-        joinColumns = { @JoinColumn(name = "supplier_id") }, 
-        inverseJoinColumns = { @JoinColumn(name = "product_id") }
-    )
-    private List<Product> products;
+    @OneToMany(mappedBy = "supplier")
+    private List<SupplierProduct> products;
 
 
     public Supplier() {}
 
-    public Supplier(Long id, String name, String cnpj, List<Product> products) {
+    public Supplier(Long id, String name, String cnpj, List<SupplierProduct> products) {
         this.id = id;
         this.name = name;
         this.cnpj = cnpj;
@@ -66,7 +58,11 @@ public class Supplier {
         this.cnpj = cnpj;
     }   
 
-    public List<Product> getProducts() {
+    public List<SupplierProduct> getProducts() {
         return products;
+    }
+
+    public void setProducts(List<SupplierProduct> products) {
+        this.products = products;
     }
 }
