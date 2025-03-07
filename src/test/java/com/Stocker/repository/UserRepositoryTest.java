@@ -1,7 +1,6 @@
 package com.Stocker.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -33,7 +32,7 @@ public class UserRepositoryTest {
     @Order(1)
     @DisplayName("Cria Usuário")
     void createUser() {        
-        Long id = userRepository.save(mockUser);
+        Long id = userRepository.save(mockUser).getId();
 
         assertNotNull(id);
     }

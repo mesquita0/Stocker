@@ -3,37 +3,16 @@ package com.Stocker.repository;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.SelectionQuery;
 
 import com.Stocker.entity.Product;
 import com.Stocker.entity.Supplier;
 import com.Stocker.util.HibernateUtil;
 
-public class SupplierRepository {
+public class SupplierRepository extends BaseRepository<Supplier, Long> {
 
-    public Long save(Supplier supplier) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.persist(supplier);
-            transaction.commit();
-
-            return supplier.getId();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-
-            return null;
-        }
-    }
-
-    public Supplier get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Supplier.class, id);
-        }
+    public SupplierRepository() {
+        super(Supplier.class);
     }
 
     public List<Supplier> getAll() {
@@ -61,10 +40,8 @@ public class SupplierRepository {
                 sb.append("s.name LIKE :name");
             }
             
-
-            String s = sb.toString();
             SelectionQuery<Supplier> query = session.createSelectionQuery(
-                s, 
+                sb.toString(), 
                 Supplier.class
             );
 
@@ -74,38 +51,6 @@ public class SupplierRepository {
             List<Supplier> suppliers = query.list();
 
             return suppliers;
-        }
-    }
-
-    public void update(Supplier supplier) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.merge(supplier);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
-
-    public void delete(Long id) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            Supplier supplier = session.get(Supplier.class, id);
-            if (supplier != null) {
-                session.remove(supplier);
-                System.out.println("Supplier is deleted");
-            }
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
         }
     }
 }
