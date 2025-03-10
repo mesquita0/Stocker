@@ -3,10 +3,12 @@ package com.Stocker.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -37,13 +39,19 @@ public class ProductRepositoryTest {
         mockName = "Sabonete";
         mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null);
         mockProduct = new Product(null, mockBarcode, mockName, 1, 5, 20, new Date(), mockUser, null);
+        
+        userRepository.save(mockUser);
+    }
+
+    @AfterAll
+    void cleanup() {
+        userRepository.delete(mockUser.getId());
     }
 
     @Test
     @Order(1)
     @DisplayName("Cria Produto")
-    void createProduct() {        
-        userRepository.save(mockUser);
+    void createProduct() {
         Long id = productRepository.save(mockProduct).getId();
         
         assertNotNull(id);
@@ -54,7 +62,7 @@ public class ProductRepositoryTest {
     @Order(2)
     @DisplayName("Recupera Produto com código de barra")
     void getProduct() {
-        Product returnProduct = productRepository.getByBarcode(mockBarcode);
+        Product returnProduct = productRepository.getByBarcode(mockBarcode).get(0);
 
         assertEquals(returnProduct.getAmount(),        mockProduct.getAmount());
         assertEquals(returnProduct.getName(),          mockProduct.getName());
@@ -87,7 +95,6 @@ public class ProductRepositoryTest {
     @Order(5)
     @DisplayName("Atualiza Produto")
     void updateProduct() {
-        mockProduct.setId(productRepository.getById(mockProduct.getId()).getId());
         mockProduct.setName("test");
         productRepository.update(mockProduct);
 
@@ -99,11 +106,9 @@ public class ProductRepositoryTest {
     @Order(6)
     @DisplayName("Deleta Produto")
     void deleteProduct() {
-        productRepository.delete(productRepository.getById(mockProduct.getId()).getId());
+        productRepository.delete(mockProduct.getId());
 
         Product returnProduct = productRepository.getById(mockProduct.getId());
-        assertEquals(returnProduct, null);
-
-        userRepository.delete(mockUser.getId());
+        assertNull(returnProduct);
     }
 }

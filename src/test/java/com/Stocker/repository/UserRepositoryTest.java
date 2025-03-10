@@ -2,6 +2,7 @@ package com.Stocker.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -68,6 +69,6 @@ public class UserRepositoryTest {
         userRepository.delete(userRepository.get(mockEmail).getId());
 
         User returnUser = userRepository.get(mockEmail);
-        assertEquals(returnUser, null);
+        assertNull(returnUser);
     }
 }

@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -18,8 +18,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import com.Stocker.entity.Product;
-import com.Stocker.entity.SupplierProduct;
 import com.Stocker.entity.Supplier;
+import com.Stocker.entity.SupplierProduct;
 import com.Stocker.entity.User;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -49,22 +49,20 @@ public class SupplierRepositoryTest {
         mockSupplier = new Supplier(null, mockName, "111", null);
         mockSP = new SupplierProduct(mockProduct, mockSupplier, 3, 1);
 
-        List<Product> products = new ArrayList<>();
-        products.add(mockProduct);
-        mockUser.setProducts(products);
-        
-        List<SupplierProduct> productSuppliers = new ArrayList<>();
-        productSuppliers.add(mockSP);
-        mockProduct.setSuppliers(productSuppliers);
-        mockSupplier.setProducts(productSuppliers);
+        userRepository.save(mockUser);
+        productRepository.save(mockProduct);
+    }
+
+    @AfterAll
+    void cleanup() {
+        productRepository.delete(mockProduct.getId());
+        userRepository.delete(mockUser.getId());
     }
 
     @Test
     @Order(1)
     @DisplayName("Cria Fornecedor")
     void createSupplier() {        
-        userRepository.save(mockUser);
-        productRepository.save(mockProduct);
         Long id = supplierRepository.save(mockSupplier).getId();
         spRepository.save(mockSP);
         
@@ -116,7 +114,6 @@ public class SupplierRepositoryTest {
     @Order(6)
     @DisplayName("Atualiza Fornecedor")
     void updateSupplier() {
-        mockSupplier.setId(supplierRepository.getById(mockSupplier.getId()).getId());
         mockSupplier.setName("test");
         supplierRepository.update(mockSupplier);
 
@@ -128,12 +125,9 @@ public class SupplierRepositoryTest {
     @Order(7)
     @DisplayName("Deleta Fornecedor")
     void deleteSupplier() {
-        supplierRepository.delete(supplierRepository.getById(mockSupplier.getId()).getId());
+        supplierRepository.delete(mockSupplier.getId());
         
         Supplier returnSupplier = supplierRepository.getById(mockSupplier.getId());
         assertNull(returnSupplier);
-        
-        productRepository.delete(mockProduct.getId());
-        userRepository.delete(mockUser.getId());
     }
 }
