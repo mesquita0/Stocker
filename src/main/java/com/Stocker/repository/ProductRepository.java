@@ -4,8 +4,6 @@ import com.Stocker.entity.Product;
 import com.Stocker.entity.User;
 import com.Stocker.util.HibernateUtil;
 
-import jakarta.persistence.Query;
-
 import org.hibernate.Session;
 import org.hibernate.query.SelectionQuery;
 
@@ -17,14 +15,14 @@ public class ProductRepository extends BaseRepository<Product, Long> {
         super(Product.class);
     }
     
-    public Product getByBarcode(Long barcode) {
+    public List<Product> getByBarcode(Long barcode) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query query = session.createQuery("FROM Product WHERE barcode=:barcode", Product.class);
+            SelectionQuery<Product> query = session.createSelectionQuery("FROM Product WHERE barcode=:barcode", Product.class);
             query.setParameter("barcode", barcode);
 
-            Product product = (Product) query.getSingleResult();
+            List<Product> products = query.list();
 
-            return product;
+            return products;
         } 
         catch (jakarta.persistence.NoResultException e) {
             return null;
