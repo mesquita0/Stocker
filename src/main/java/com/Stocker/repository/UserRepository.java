@@ -13,7 +13,7 @@ public class UserRepository extends BaseRepository<User, Long> {
         super(User.class);
     }
 
-    public User get(String email) {
+    public User getByEmail(String email) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query query = session.createQuery("FROM User WHERE email=:email", User.class);
             query.setParameter("email", email);

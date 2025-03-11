@@ -42,7 +42,7 @@ public class UserRepositoryTest {
     @Order(2)
     @DisplayName("Recupera Usuário com o email")
     void getUser() {
-        User returnUser = userRepository.get(mockEmail);
+        User returnUser = userRepository.getByEmail(mockEmail);
 
         assertEquals(returnUser.getCpf(), mockUser.getCpf());
         assertEquals(returnUser.getEmail(), mockUser.getEmail());
@@ -54,11 +54,11 @@ public class UserRepositoryTest {
     @Order(3)
     @DisplayName("Atualiza Usuário")
     void updateUser() {
-        mockUser.setId(userRepository.get(mockEmail).getId());
+        mockUser.setId(userRepository.getByEmail(mockEmail).getId());
         mockUser.setName("Lucas");
         userRepository.update(mockUser);
 
-        User returnUser = userRepository.get(mockEmail);
+        User returnUser = userRepository.getByEmail(mockEmail);
         assertEquals(returnUser.getName(), mockUser.getName());
     }
 
@@ -66,9 +66,9 @@ public class UserRepositoryTest {
     @Order(4)
     @DisplayName("Deleta Usuário")
     void deleteUser() {
-        userRepository.delete(userRepository.get(mockEmail).getId());
+        userRepository.delete(userRepository.getByEmail(mockEmail).getId());
 
-        User returnUser = userRepository.get(mockEmail);
+        User returnUser = userRepository.getByEmail(mockEmail);
         assertNull(returnUser);
     }
 }
