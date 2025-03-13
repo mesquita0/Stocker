@@ -18,7 +18,10 @@ public class ProductRepository extends BaseRepository<Product, Long> {
     
     public List<Product> getByBarcode(Long barcode) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            SelectionQuery<Product> query = session.createSelectionQuery("FROM Product WHERE barcode=:barcode", Product.class);
+            SelectionQuery<Product> query = session.createSelectionQuery(
+                "FROM Product WHERE barcode=:barcode", 
+                Product.class
+            );
             query.setParameter("barcode", barcode);
 
             List<Product> products = query.list();

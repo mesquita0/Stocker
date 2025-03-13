@@ -18,7 +18,8 @@ public class SaleRepository extends BaseRepository<Sale, Long> {
     public List<Sale> getByDate(User user, Date fromDate, Date toDate) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             SelectionQuery<Sale> query = session.createSelectionQuery(
-                 "FROM Sale s WHERE s.product.user.id=:u_id AND s.date BETWEEN :fDate AND :tDate", 
+                 "FROM Sale s JOIN FETCH s.product p JOIN FETCH p.suppliers sups " +  
+                 "WHERE s.product.user.id=:u_id AND s.date BETWEEN :fDate AND :tDate", 
                  Sale.class
              );
  
