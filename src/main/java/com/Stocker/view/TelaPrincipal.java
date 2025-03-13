@@ -6,7 +6,7 @@ package com.Stocker.view;
 
 import java.util.Date;
 import javax.swing.JOptionPane;
-
+import com.Stocker.entity.User;
 
 /**
  *
@@ -17,9 +17,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form TelaPrincipal
      */
-    public TelaPrincipal() {
+     User usuario;
+     
+    public TelaPrincipal(User usuario) {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        this.usuario = usuario;
     }
 
     /**
@@ -127,6 +130,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Menu.add(jMenu4);
 
         jMenu5.setText("Produtos");
+        jMenu5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu5ActionPerformed(evt);
+            }
+        });
 
         menu_produtos.setText("Produtos");
         menu_produtos.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +218,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void menu_produtosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_produtosActionPerformed
         // TODO add your handling code here:
-        TelaProduto produto = new TelaProduto(); 
+        TelaProduto produto = new TelaProduto(usuario); 
         produto.setSize(Desktop.getWidth(), Desktop.getHeight());
         produto.setLocation(0, 0); 
         produto.setVisible(true);  
@@ -252,12 +260,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        TelaHistorico historico = new TelaHistorico(); 
-        historico.setSize(Desktop.getWidth(), Desktop.getHeight());
-        historico.setLocation(0, 0); 
-        historico.setVisible(true);  
-        Desktop.add(historico);   
-        historico.toFront();
+       
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -279,6 +282,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Desktop.add(gerenciar);   
         gerenciar.toFront();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -310,7 +317,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipal().setVisible(true);
+                new TelaPrincipal(null).setVisible(true);
             }
         });
     }

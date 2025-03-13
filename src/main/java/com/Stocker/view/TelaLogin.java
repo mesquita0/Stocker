@@ -27,7 +27,7 @@ public class TelaLogin extends javax.swing.JFrame {
             if (usuario != null){
                 JOptionPane.showMessageDialog(this, "Login Bem-Sucedido!");
                 this.dispose();
-                TelaPrincipal principal = new TelaPrincipal();
+                TelaPrincipal principal = new TelaPrincipal(usuario);
                 principal.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Email ou Senha Incorretos!", "ERRO", JOptionPane.ERROR_MESSAGE);
