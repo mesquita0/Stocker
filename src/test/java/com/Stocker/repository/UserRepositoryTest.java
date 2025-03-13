@@ -26,7 +26,7 @@ public class UserRepositoryTest {
     void setup() {
         userRepository = new UserRepository();
         mockEmail = "a@gmail.com";
-        mockUser = new User(null, "Pablo", "111.111.111-11", mockEmail, "123456", "(84)99999-9999", null);
+        mockUser = new User(null, "Pablo", "111.111.111-11", mockEmail, "123456", "(84)99999-9999", null, null);
     }
 
     @Test

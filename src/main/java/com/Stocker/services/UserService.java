@@ -28,6 +28,7 @@ public class UserService {
             user.getEmail(),
             user.getPassword(),
             user.getPhoneNumber(),
+            null,
             null
         );
 

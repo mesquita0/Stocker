@@ -16,7 +16,7 @@ public class SupplierService {
     }
 
     public Supplier createSupplier(String name, String cnpj) {
-        Supplier newSupplier = new Supplier(null, name, cnpj, null);
+        Supplier newSupplier = new Supplier(null, name, cnpj, user, null);
 
         return supplierRepository.save(newSupplier);
     }

@@ -2,11 +2,13 @@ package com.Stocker.entity;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -15,26 +17,32 @@ import jakarta.persistence.Table;
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "supplier_id")
     private Long id;
 
     private String name;
 
     private String cnpj;
 
-    @OneToMany(mappedBy = "supplier", fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
+
+    @OneToMany(mappedBy = "supplier")
     private List<SupplierProduct> products;
 
 
     public Supplier() {}
-
-    public Supplier(Long id, String name, String cnpj, List<SupplierProduct> products) {
+    
+    public Supplier(Long id, String name, String cnpj, User user, List<SupplierProduct> products) {
         this.id = id;
         this.name = name;
         this.cnpj = cnpj;
+        this.user = user;
         this.products = products;
     }
 
-    
+
     public Long getId() {
         return id;
     }
@@ -65,5 +73,13 @@ public class Supplier {
 
     public void setProducts(List<SupplierProduct> products) {
         this.products = products;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

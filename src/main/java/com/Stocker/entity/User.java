@@ -28,14 +28,17 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy = "user")
     private List<Product> products;
 
+    @OneToMany(mappedBy = "user")
+    private List<Supplier> suppliers;
 
-    public User() {}
-    
+
+    public User() {}    
+
     public User(Long id, String name, String cpf, String email, String password, String phoneNumber,
-            List<Product> products) {
+            List<Product> products, List<Supplier> suppliers) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
@@ -43,8 +46,9 @@ public class User {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.products = products;
+        this.suppliers = suppliers;
     }
-    
+
 
     public Long getId() {
         return id;
@@ -100,5 +104,13 @@ public class User {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public List<Supplier> getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(List<Supplier> suppliers) {
+        this.suppliers = suppliers;
     }
 }

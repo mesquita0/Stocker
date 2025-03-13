@@ -50,9 +50,9 @@ public class NotificationServiceTest {
         userRepository = new UserRepository();
         spRepository = new SupplierProductRepository();
         
-        mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null);
+        mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null, null);
         mockProduct = new Product(null, 154184L, "Sabonete", 1, 5, 24, new Date(), mockUser, null);
-        mockSupplier = new Supplier(null, "teste", "111", null);
+        mockSupplier = new Supplier(null, "teste", "111", mockUser,  null);
         mockSP = new SupplierProduct(mockProduct, mockSupplier, 3, 1);
 
         userRepository.save(mockUser);

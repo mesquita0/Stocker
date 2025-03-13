@@ -42,7 +42,7 @@ public class ProductRepositoryTest {
         spRepository = new SupplierProductRepository();
         mockBarcode = 154184L;
         mockName = "Sabonete";
-        mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null);
+        mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null, null);
         mockProduct = new Product(null, mockBarcode, mockName, 1, 5, 20, new Date(), mockUser, null);
         
         userRepository.save(mockUser);
@@ -88,7 +88,7 @@ public class ProductRepositoryTest {
     @Order(4)
     @DisplayName("Não lista Produtos de outros usuários")
     void doesNotListProductsFromOtherUsers() {
-        User newUser = new User(null, "test", "1", "b", "a", "c", null);
+        User newUser = new User(null, "test", "1", "b", "a", "c", null, null);
         userRepository.save(newUser);
 
         List<Product> returnProducts = productRepository.getAll(newUser);
@@ -116,7 +116,7 @@ public class ProductRepositoryTest {
     @DisplayName("Lista Produtos por fornecedor")
     void listProductBySupplier() {
         Product newProduct    = new Product(null, 87945L, "Sabão", 10, 20, 50, new Date(), mockUser, null);
-        Supplier mockSupplier  = new Supplier(null, mockName, "111", null);
+        Supplier mockSupplier  = new Supplier(null, mockName, "111", mockUser, null);
         SupplierProduct mockSP = new SupplierProduct(newProduct, mockSupplier, 3, 1);
 
         productRepository.save(newProduct);

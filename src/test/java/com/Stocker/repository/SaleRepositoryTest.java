@@ -36,7 +36,7 @@ public class SaleRepositoryTest {
         saleRepository = new SaleRepository();
         productRepository = new ProductRepository();
         userRepository = new UserRepository();
-        mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null);
+        mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null, null);
         mockProduct = new Product(null, 154184L, "Sabonete", 1, 5, 20, new Date(), mockUser, null);
         mockSale = new Sale(null, 1, mockProduct.getSellingPrice(), new Date(), mockProduct);
 
@@ -73,7 +73,7 @@ public class SaleRepositoryTest {
     @Order(3)
     @DisplayName("Não lista Vendas de outros usuários")
     void doesNotListSalesOtherUsers() {
-        User newUser = new User(null, "Lucas", "111.111.111-12", "ab@gmail.com", "1234567", "(84)99999-9998", null);
+        User newUser = new User(null, "Lucas", "111.111.111-12", "ab@gmail.com", "1234567", "(84)99999-9998", null, null);
         Long newUserId = userRepository.save(newUser).getId();
 
         List<Sale> returnSales = saleRepository.getAll(newUser);

@@ -35,9 +35,9 @@ public class SupplierRepository extends BaseRepository<Supplier, Long> {
     private List<Supplier> getAll(User user, Product product, String name) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             StringBuilder sb = new StringBuilder();
-            sb.append("FROM Supplier s JOIN s.products p WHERE ");
+            sb.append("FROM Supplier s LEFT JOIN s.products p WHERE ");
 
-            if (user != null)    sb.append("p.product.user.id=:u_id AND ");
+            if (user != null)    sb.append("s.user.id=:u_id AND ");
             if (product != null) sb.append("p.product.id=:p_id AND ");
             if (name != null)    sb.append("s.name LIKE :name AND ");
 

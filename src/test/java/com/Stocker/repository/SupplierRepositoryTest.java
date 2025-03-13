@@ -1,7 +1,6 @@
 package com.Stocker.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -44,9 +43,9 @@ public class SupplierRepositoryTest {
         spRepository = new SupplierProductRepository();
         mockName = "teste";
         
-        mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null);
+        mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null, null);
         mockProduct = new Product(null, 154184L, "Sabonete", 1, 5, 20, new Date(), mockUser, null);
-        mockSupplier = new Supplier(null, mockName, "111", null);
+        mockSupplier = new Supplier(null, mockName, "111", mockUser, null);
         mockSP = new SupplierProduct(mockProduct, mockSupplier, 3, 1);
 
         userRepository.save(mockUser);
@@ -85,11 +84,27 @@ public class SupplierRepositoryTest {
     void listSupplier() {
         List<Supplier> returnSuppliers = supplierRepository.getAll(mockUser);
 
-        assertNotEquals(returnSuppliers.size(), 0);
+        assertEquals(returnSuppliers.size(), 1);
     }
 
     @Test
     @Order(4)
+    @DisplayName("Lista Fornecedores que não fornecem nenhum produto")
+    void listSupplierWOProducts() {
+        Supplier newSupplier = new Supplier(null, mockName, "111", mockUser, null);
+        Long id = supplierRepository.save(newSupplier).getId(); 
+
+        List<Supplier> returnSuppliers = supplierRepository.getAll(mockUser);
+        assertEquals(returnSuppliers.size(), 2);
+
+        supplierRepository.delete(id);
+
+        returnSuppliers = supplierRepository.getAll(mockUser);
+        assertEquals(returnSuppliers.size(), 1);   
+    }
+
+    @Test
+    @Order(5)
     @DisplayName("Lista Fornecedores por nome")
     void listSupplierByName() {
         List<Supplier> returnSuppliers = supplierRepository.getAll(
@@ -97,21 +112,21 @@ public class SupplierRepositoryTest {
             mockName.substring(0, mockName.length() - 1)
         );
 
-        assertNotEquals(returnSuppliers.size(), 0);
+        assertEquals(returnSuppliers.size(), 1);
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     @DisplayName("Lista Fornecedores por produto")
     void listSupplierByProduct() {
         List<Supplier> returnSuppliers = supplierRepository.getAll(mockProduct);
 
-        assertNotEquals(returnSuppliers.size(), 0);
+        assertEquals(returnSuppliers.size(), 1);
     }
 
 
     @Test
-    @Order(6)
+    @Order(7)
     @DisplayName("Atualiza Fornecedor")
     void updateSupplier() {
         mockSupplier.setName("test");
@@ -122,7 +137,7 @@ public class SupplierRepositoryTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     @DisplayName("Deleta Fornecedor")
     void deleteSupplier() {
         supplierRepository.delete(mockSupplier.getId());
