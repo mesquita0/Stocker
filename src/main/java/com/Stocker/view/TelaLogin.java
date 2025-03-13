@@ -4,6 +4,9 @@
  */
 package com.Stocker.view;
 
+import com.Stocker.services.UserService;
+import com.Stocker.entity.User;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Tacio
@@ -13,6 +16,26 @@ public class TelaLogin extends javax.swing.JFrame {
     /**
      * Creates new form TelaLogin
      */
+        UserService userService = new UserService();
+        
+        public void logar() {
+            String email = txt_usuario.getText();
+            String senha = jPasswordField6.getText();
+            
+            User usuario = userService.login(email, senha);
+            
+            if (usuario != null){
+                JOptionPane.showMessageDialog(this, "Login Bem-Sucedido!");
+                this.dispose();
+                TelaPrincipal principal = new TelaPrincipal();
+                principal.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Email ou Senha Incorretos!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        }
+                
+    
     public TelaLogin() {
         initComponents();
     }
@@ -127,6 +150,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void bnt_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_loginActionPerformed
         // TODO add your handling code here:
+        logar();
     }//GEN-LAST:event_bnt_loginActionPerformed
 
     private void txt_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usuarioActionPerformed
