@@ -1,5 +1,6 @@
 package com.Stocker.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -68,16 +69,20 @@ public class SaleService {
         getProductsCart().forEach(p -> removeFromCart(p.getProduct()));
     }
 
-    public void confirmSale() {
+    public List<Sale> confirmSale() {
+        List<Sale> sales = new ArrayList<>();
+
         for (ProductCart productCart : products.values()) {
             Sale sale = new Sale(null, productCart.getAmount(), productCart.getProduct().getSellingPrice(), new Date(), productCart.getProduct());
 
-            saleRepository.save(sale);
+            sales.add(saleRepository.save(sale));
             productRepository.update(productCart.getProduct());
 
             productCart.setAmount(0);
         }
         
         clearCart();
+
+        return sales;
     }
 }

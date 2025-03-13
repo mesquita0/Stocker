@@ -17,7 +17,7 @@ public class ProductService {
         this.user = user;
     }
 
-    public void createProduct(CreateProductDTO product) {
+    public Product createProduct(CreateProductDTO product) {
         Product newProduct = new Product(
             null, 
             product.getBarcode(), 
@@ -30,7 +30,7 @@ public class ProductService {
             null
         );
 
-        productRepository.save(newProduct);
+        return productRepository.save(newProduct);
     }
 
     public List<Product> listProducts(String name) {

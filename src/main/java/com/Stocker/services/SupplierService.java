@@ -15,10 +15,10 @@ public class SupplierService {
         this.user = user;
     }
 
-    public void createSupplier(String name, String cnpj) {
+    public Supplier createSupplier(String name, String cnpj) {
         Supplier newSupplier = new Supplier(null, name, cnpj, null);
 
-        supplierRepository.save(newSupplier);
+        return supplierRepository.save(newSupplier);
     }
 
     public List<Supplier> listSuppliers(String name) {
