@@ -13,7 +13,7 @@ public class UserService {
     public User login(String email, String password) {
         User user = userRepository.getByEmail(email);
 
-        if ((user == null) || (password != user.getPassword())) 
+        if ((user == null) || !user.getPassword().equals(password)) 
             return null;
 
         user.setPassword(null);            
