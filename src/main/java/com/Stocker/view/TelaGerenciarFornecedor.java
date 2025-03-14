@@ -4,6 +4,14 @@
  */
 package com.Stocker.view;
 
+import com.Stocker.services.SupplierService;
+import com.Stocker.entity.Supplier;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;  
+import com.Stocker.entity.User; 
+import com.Stocker.repository.SupplierRepository;
+import java.util.List;
+
 /**
  *
  * @author Tacio
@@ -13,10 +21,73 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaGerenciarFornecedor
      */
-    public TelaGerenciarFornecedor() {
-        initComponents();
+    User usuario; 
+    
+    private SupplierService supplierService;  
+     
+    public TelaGerenciarFornecedor(User usuario) {
+        initComponents();   
+        this.usuario = usuario;   
+        supplierService = new SupplierService(usuario);     
+    }
+    
+    public void pesquisar_fornecedores(){ 
+        String nomePesquisa = txt_pesquisa.getText(); 
+        SupplierService supplierservice = new SupplierService(usuario);  
+        List<Supplier> fornecedores = supplierservice.listSuppliers(nomePesquisa);    
+        
+        
+        //Limpar tabela
+        DefaultTableModel modeloTabela = (DefaultTableModel) tbl_gerenciarfornecedores.getModel();  
+        modeloTabela.setRowCount(0);
+        
+        //Adicionar o resultado a tabela
+        for (Supplier fornecedor : fornecedores) {
+        modeloTabela.addRow(new Object[]{
+            fornecedor.getId(),
+            fornecedor.getName(),
+            fornecedor.getCnpj()
+        });
+        }
+    }
+    
+    public void setar_campos(){ 
+        int linhaSelecionada = tbl_gerenciarfornecedores.getSelectedRow(); 
+
+    if (linhaSelecionada != -1) { // Verifica se alguma linha foi selecionada
+        txt_id.setText(tbl_gerenciarfornecedores.getValueAt(linhaSelecionada, 0).toString());
+        txt_nome.setText(tbl_gerenciarfornecedores.getValueAt(linhaSelecionada, 1).toString());
+        txt_cnpj.setText(tbl_gerenciarfornecedores.getValueAt(linhaSelecionada, 2).toString());
+    } 
+    }
+    
+    public void adicionar_fornecedor(){
+        try{
+           String nome = txt_nome.getText();
+           String cnpj = txt_cnpj.getText();
+           
+           Supplier novoSupplier = supplierService.createSupplier(nome, cnpj);       
+           
+           if(novoSupplier != null){ 
+               JOptionPane.showMessageDialog(this, "Fornecedor cadastrado!");
+               txt_nome.setText(null);
+               txt_cnpj.setText(null);
+
+           } else {
+               JOptionPane.showMessageDialog(this, "Preencha os campos corretamente!", "erro",JOptionPane.ERROR_MESSAGE );
+               
+           }
+                 
+        } catch(Exception e){
+             JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    public void remover_fornecedor(){
+        
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,16 +97,16 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        txt_pesquisa = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_gerenciarfornecedores = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txt_nome = new javax.swing.JTextField();
+        txt_cnpj = new javax.swing.JTextField();
+        txt_id = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -46,15 +117,19 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
         setResizable(true);
         getContentPane().setLayout(null);
 
-        jTextField1.setText("jTextField1");
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(70, 40, 330, 26);
+        txt_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_pesquisaKeyReleased(evt);
+            }
+        });
+        getContentPane().add(txt_pesquisa);
+        txt_pesquisa.setBounds(70, 40, 330, 26);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Pesquisar");
         getContentPane().add(jButton1);
-        jButton1.setBounds(420, 40, 79, 27);
+        jButton1.setBounds(410, 40, 90, 27);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_gerenciarfornecedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -65,14 +140,19 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbl_gerenciarfornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_gerenciarfornecedoresMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl_gerenciarfornecedores);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(70, 80, 1020, 270);
 
         jLabel1.setText("Nome");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(80, 390, 34, 16);
+        jLabel1.setBounds(80, 390, 33, 16);
 
         jLabel2.setText("CNPJ");
         getContentPane().add(jLabel2);
@@ -81,24 +161,28 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
         jLabel3.setText("Id");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(950, 410, 10, 16);
-
-        jTextField2.setText("jTextField2");
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(130, 390, 400, 26);
-
-        jTextField3.setText("jTextField3");
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(130, 450, 400, 26);
-
-        jTextField4.setText("jTextField4");
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(970, 400, 78, 26);
+        getContentPane().add(txt_nome);
+        txt_nome.setBounds(130, 390, 400, 26);
+        getContentPane().add(txt_cnpj);
+        txt_cnpj.setBounds(130, 450, 400, 26);
+        getContentPane().add(txt_id);
+        txt_id.setBounds(970, 400, 68, 26);
 
         jButton2.setText("Adicionar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2);
         jButton2.setBounds(180, 560, 110, 27);
 
         jButton3.setText("Editar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton3);
         jButton3.setBounds(450, 560, 76, 27);
 
@@ -115,8 +199,27 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here: 
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txt_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pesquisaKeyReleased
+        // TODO add your handling code here: 
+        pesquisar_fornecedores();      
+    }//GEN-LAST:event_txt_pesquisaKeyReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        adicionar_fornecedor(); 
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tbl_gerenciarfornecedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_gerenciarfornecedoresMouseClicked
+        // TODO add your handling code here:
+        setar_campos();
+    }//GEN-LAST:event_tbl_gerenciarfornecedoresMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -128,10 +231,10 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable tbl_gerenciarfornecedores;
+    private javax.swing.JTextField txt_cnpj;
+    private javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_nome;
+    private javax.swing.JTextField txt_pesquisa;
     // End of variables declaration//GEN-END:variables
 }

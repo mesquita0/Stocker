@@ -46,14 +46,12 @@ public class TelaPedido extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         getContentPane().setLayout(null);
-
-        jTextField1.setText("jTextField1");
         getContentPane().add(jTextField1);
         jTextField1.setBounds(80, 40, 236, 26);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Pesquisar");
         getContentPane().add(jButton1);
-        jButton1.setBounds(320, 40, 79, 27);
+        jButton1.setBounds(320, 40, 90, 27);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,13 +71,13 @@ public class TelaPedido extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nome");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(110, 370, 34, 16);
+        jLabel1.setBounds(110, 370, 33, 16);
         getContentPane().add(jTextField2);
         jTextField2.setBounds(160, 370, 200, 26);
 
         jLabel2.setText("Valor");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(110, 420, 28, 16);
+        jLabel2.setBounds(110, 420, 27, 16);
         getContentPane().add(jTextField3);
         jTextField3.setBounds(160, 420, 200, 26);
 
@@ -92,8 +90,6 @@ public class TelaPedido extends javax.swing.JInternalFrame {
         jLabel4.setBounds(700, 430, 70, 16);
         getContentPane().add(jTextField4);
         jTextField4.setBounds(750, 370, 200, 26);
-
-        jTextField5.setText("jTextField5");
         getContentPane().add(jTextField5);
         jTextField5.setBounds(770, 430, 190, 26);
 
@@ -104,7 +100,7 @@ public class TelaPedido extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(1000, 370, 150, 30);
+        jButton2.setBounds(1000, 370, 148, 30);
 
         jButton3.setText("Ir para o carrinho");
         jButton3.addActionListener(new java.awt.event.ActionListener() {

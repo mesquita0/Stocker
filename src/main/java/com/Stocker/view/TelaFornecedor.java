@@ -4,6 +4,12 @@
  */
 package com.Stocker.view;
 
+import com.Stocker.entity.Supplier;
+import com.Stocker.entity.User;
+import com.Stocker.services.SupplierService;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Tacio
@@ -13,8 +19,34 @@ public class TelaFornecedor extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaFornecedor
      */
-    public TelaFornecedor() {
+    User usuario; 
+    
+    private SupplierService supplierService;
+    
+    public TelaFornecedor(User usuario) {
         initComponents();
+        this.usuario = usuario;   
+        supplierService = new SupplierService(usuario);
+    }
+    
+    public void pesquisar_fornecedores(){ 
+        String nomePesquisa = txt_pesquisa.getText(); 
+        SupplierService supplierservice = new SupplierService(usuario);   
+        List<Supplier> fornecedores = supplierservice.listSuppliers(nomePesquisa);    
+        
+        
+        //Limpar tabela
+        DefaultTableModel modeloTabela = (DefaultTableModel) tbl_fornecedores.getModel();  
+        modeloTabela.setRowCount(0);
+        
+        //Adicionar o resultado a tabela
+        for (Supplier fornecedor : fornecedores) {
+        modeloTabela.addRow(new Object[]{
+            fornecedor.getId(),
+            fornecedor.getName(),
+            fornecedor.getCnpj()
+        });
+        }
     }
 
     /**
@@ -26,10 +58,10 @@ public class TelaFornecedor extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        txt_pesquisa = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_fornecedores = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -43,12 +75,20 @@ public class TelaFornecedor extends javax.swing.JInternalFrame {
         setResizable(true);
         setPreferredSize(new java.awt.Dimension(1295, 695));
         getContentPane().setLayout(null);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(30, 23, 415, 26);
-        getContentPane().add(jButton1);
-        jButton1.setBounds(451, 23, 76, 11);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        txt_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_pesquisaKeyReleased(evt);
+            }
+        });
+        getContentPane().add(txt_pesquisa);
+        txt_pesquisa.setBounds(30, 23, 415, 26);
+
+        jButton1.setText("Pesquisar");
+        getContentPane().add(jButton1);
+        jButton1.setBounds(451, 23, 84, 27);
+
+        tbl_fornecedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,7 +99,7 @@ public class TelaFornecedor extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_fornecedores);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(30, 69, 1228, 160);
@@ -106,6 +146,11 @@ public class TelaFornecedor extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void txt_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pesquisaKeyReleased
+        // TODO add your handling code here:
+        pesquisar_fornecedores(); 
+    }//GEN-LAST:event_txt_pesquisaKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -114,9 +159,9 @@ public class TelaFornecedor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tbl_fornecedores;
+    private javax.swing.JTextField txt_pesquisa;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,13 @@
  */
 package com.Stocker.view;
 
+import com.Stocker.services.UserService;
+import com.Stocker.entity.User;
+import com.Stocker.dto.CreateUserDTO; 
+import javax.swing.JOptionPane;
+
+
+
 /**
  *
  * @author Tacio
@@ -13,8 +20,44 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaUsuario
      */
+    User usuario; 
+    
+    private UserService userService;
+    
     public TelaUsuario() {
-        initComponents();
+        initComponents(); 
+        userService = new UserService();   
+    }
+    
+    public void cadastrar_usuario(){
+        try{
+           String nome = txt_nome.getText(); 
+           String login = txt_login.getText();
+           String senha = txt_senha.getText();
+           String cpf = txt_cpf.getText(); 
+           String celular = txt_celular.getText();
+           
+           CreateUserDTO user = new CreateUserDTO(nome, cpf, login, senha, celular);
+           
+       
+           User novoUser = userService.createUser(user);    
+            
+           if(novoUser != null){
+               JOptionPane.showMessageDialog(this, "Usuário cadastrado!"); 
+               txt_nome.setText(null);
+               txt_login.setText(null);
+               txt_senha.setText(null);
+               txt_cpf.setText(null);
+               txt_celular.setText(null);
+               txt_id.setText(null); 
+           } else {
+               JOptionPane.showMessageDialog(this, "Preencha os campos corretamente!", "erro",JOptionPane.ERROR_MESSAGE );
+               
+           }
+                 
+        } catch(Exception e){
+             JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**
@@ -25,6 +68,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -32,12 +76,12 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        txt_senha = new javax.swing.JTextField();
+        txt_login = new javax.swing.JTextField();
+        txt_cpf = new javax.swing.JTextField();
+        txt_celular = new javax.swing.JTextField();
+        txt_id = new javax.swing.JTextField();
+        txt_nome = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -47,64 +91,161 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        getContentPane().setLayout(null);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setText("Id");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(550, 130, 10, 16);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(130, 84, 0, 0);
+        getContentPane().add(jLabel1, gridBagConstraints);
 
         jLabel2.setText("Nome");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(100, 130, 34, 16);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(130, 100, 0, 0);
+        getContentPane().add(jLabel2, gridBagConstraints);
 
         jLabel3.setText("Cpf");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(115, 240, 19, 16);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(29, 115, 0, 0);
+        getContentPane().add(jLabel3, gridBagConstraints);
 
         jLabel5.setText("Senha");
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(524, 190, 36, 16);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(39, 58, 0, 0);
+        getContentPane().add(jLabel5, gridBagConstraints);
 
         jLabel6.setText("Login");
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(100, 190, 34, 16);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(39, 100, 0, 0);
+        getContentPane().add(jLabel6, gridBagConstraints);
 
         jLabel4.setText("Celular");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(520, 240, 40, 16);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(566, 185, 315, 26);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(140, 185, 315, 26);
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(140, 235, 315, 26);
-
-        jTextField4.setText("jTextField4");
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(566, 235, 315, 26);
-        getContentPane().add(jTextField5);
-        jTextField5.setBounds(566, 125, 68, 26);
-        getContentPane().add(jTextField6);
-        jTextField6.setBounds(140, 125, 315, 26);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(29, 54, 0, 0);
+        getContentPane().add(jLabel4, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 247;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(34, 6, 0, 189);
+        getContentPane().add(txt_senha, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 247;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(34, 6, 0, 0);
+        getContentPane().add(txt_login, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 247;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(24, 6, 0, 0);
+        getContentPane().add(txt_cpf, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 247;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(24, 6, 0, 189);
+        getContentPane().add(txt_celular, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(125, 6, 0, 0);
+        getContentPane().add(txt_id, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 247;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(125, 6, 0, 0);
+        getContentPane().add(txt_nome, gridBagConstraints);
 
         jButton1.setText("Adicionar");
-        getContentPane().add(jButton1);
-        jButton1.setBounds(230, 420, 85, 27);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(159, 96, 136, 0);
+        getContentPane().add(jButton1, gridBagConstraints);
 
         jButton2.setText("Editar");
-        getContentPane().add(jButton2);
-        jButton2.setBounds(390, 420, 76, 27);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(159, 75, 136, 0);
+        getContentPane().add(jButton2, gridBagConstraints);
 
         jButton3.setText("Buscar");
-        getContentPane().add(jButton3);
-        jButton3.setBounds(550, 420, 76, 27);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(159, 84, 136, 0);
+        getContentPane().add(jButton3, gridBagConstraints);
 
         jButton4.setText("Remover");
-        getContentPane().add(jButton4);
-        jButton4.setBounds(720, 420, 90, 27);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(159, 86, 136, 0);
+        getContentPane().add(jButton4, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        cadastrar_usuario(); 
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -118,11 +259,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField txt_celular;
+    private javax.swing.JTextField txt_cpf;
+    private javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_login;
+    private javax.swing.JTextField txt_nome;
+    private javax.swing.JTextField txt_senha;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,14 +26,14 @@ public class TelaProduto extends javax.swing.JInternalFrame {
     
     public void cadastrarProduto(){
         try{
-           String nome = nomeTxt.getText();
-           Long barcode = Long.parseLong(barcodeTxt.getText());
-           Integer precoCompra = Integer.parseInt(entradaTxt.getText());
-           Integer precoVenda = Integer.parseInt(saidaTxt.getText());
-           int quantidade = Integer.parseInt(quantTxt.getText());
+           String nome = txt_nome.getText();
+           Long barcode = Long.parseLong(txt_codigodebarras.getText());
+           Integer precoCompra = Integer.parseInt(txt_valorentrada.getText());
+           Integer precoVenda = Integer.parseInt(txt_valorsaida.getText());
+           int quantidade = Integer.parseInt(txt_estoque.getText());
            
            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-           Date validade = sdf.parse(validadeTxt.getText());
+           Date validade = sdf.parse(txt_validade.getText());
            
            CreateProductDTO produto = new CreateProductDTO(barcode, nome, precoCompra, precoVenda, quantidade, validade);
            
@@ -42,12 +42,12 @@ public class TelaProduto extends javax.swing.JInternalFrame {
            
            if(novoProduto != null){
                JOptionPane.showMessageDialog(this, "Produto cadastrado!");
-               nomeTxt.setText(null);
-               barcodeTxt.setText(null);
-               entradaTxt.setText(null);
-               saidaTxt.setText(null);
-               quantTxt.setText(null);
-               validadeTxt.setText(null);
+               txt_nome.setText(null);
+               txt_codigodebarras.setText(null);
+               txt_valorentrada.setText(null);
+               txt_valorsaida.setText(null);
+               txt_estoque.setText(null);
+               txt_validade.setText(null);
            } else {
                JOptionPane.showMessageDialog(this, "Preencha os campos corretamente!", "erro",JOptionPane.ERROR_MESSAGE );
                
@@ -79,7 +79,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        txt_pesquisa = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -87,17 +87,17 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        nomeTxt = new javax.swing.JTextField();
-        entradaTxt = new javax.swing.JTextField();
-        quantTxt = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        txt_nome = new javax.swing.JTextField();
+        txt_valorentrada = new javax.swing.JTextField();
+        txt_estoque = new javax.swing.JTextField();
+        bnt_adicionar = new javax.swing.JButton();
+        bnt_editar = new javax.swing.JButton();
+        bnt_remover = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        saidaTxt = new javax.swing.JTextField();
+        txt_valorsaida = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        barcodeTxt = new javax.swing.JTextField();
-        validadeTxt = new javax.swing.JTextField();
+        txt_codigodebarras = new javax.swing.JTextField();
+        txt_validade = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -105,17 +105,22 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         setResizable(true);
         getContentPane().setLayout(null);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txt_pesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txt_pesquisaActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(25, 30, 415, 22);
+        txt_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_pesquisaKeyReleased(evt);
+            }
+        });
+        getContentPane().add(txt_pesquisa);
+        txt_pesquisa.setBounds(25, 30, 415, 26);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Pesquisar");
         getContentPane().add(jButton1);
-        jButton1.setBounds(446, 30, 75, 23);
+        jButton1.setBounds(446, 30, 90, 27);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -128,6 +133,11 @@ public class TelaProduto extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
@@ -135,11 +145,11 @@ public class TelaProduto extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nome");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(25, 410, 33, 16);
+        jLabel1.setBounds(100, 410, 33, 16);
 
         jLabel3.setText("Valor Entrada");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(31, 465, 70, 16);
+        jLabel3.setBounds(60, 460, 70, 16);
 
         jLabel4.setText("Validade");
         getContentPane().add(jLabel4);
@@ -148,100 +158,106 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         jLabel5.setText("Estoque");
         getContentPane().add(jLabel5);
         jLabel5.setBounds(620, 460, 42, 20);
-        getContentPane().add(nomeTxt);
-        nomeTxt.setBounds(65, 405, 350, 22);
-        getContentPane().add(entradaTxt);
-        entradaTxt.setBounds(110, 460, 172, 22);
-        getContentPane().add(quantTxt);
-        quantTxt.setBounds(680, 460, 64, 22);
+        getContentPane().add(txt_nome);
+        txt_nome.setBounds(140, 410, 350, 26);
+        getContentPane().add(txt_valorentrada);
+        txt_valorentrada.setBounds(140, 460, 172, 26);
+        getContentPane().add(txt_estoque);
+        txt_estoque.setBounds(680, 460, 68, 26);
 
-        jButton2.setText("Adicionar");
-        jButton2.setToolTipText("");
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        bnt_adicionar.setText("Adicionar");
+        bnt_adicionar.setToolTipText("");
+        bnt_adicionar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bnt_adicionar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bnt_adicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                bnt_adicionarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(170, 580, 81, 23);
+        getContentPane().add(bnt_adicionar);
+        bnt_adicionar.setBounds(170, 580, 85, 27);
 
-        jButton3.setText("Editar");
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        getContentPane().add(jButton3);
-        jButton3.setBounds(600, 580, 72, 23);
+        bnt_editar.setText("Editar");
+        bnt_editar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bnt_editar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(bnt_editar);
+        bnt_editar.setBounds(600, 580, 76, 27);
 
-        jButton4.setText("Remover");
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        bnt_remover.setText("Remover");
+        bnt_remover.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bnt_remover.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bnt_remover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                bnt_removerActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4);
-        jButton4.setBounds(980, 570, 77, 23);
+        getContentPane().add(bnt_remover);
+        bnt_remover.setBounds(980, 570, 81, 27);
 
         jLabel2.setText("Valor Saida");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(30, 510, 70, 16);
+        jLabel2.setBounds(70, 510, 60, 16);
 
-        saidaTxt.addActionListener(new java.awt.event.ActionListener() {
+        txt_valorsaida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saidaTxtActionPerformed(evt);
+                txt_valorsaidaActionPerformed(evt);
             }
         });
-        getContentPane().add(saidaTxt);
-        saidaTxt.setBounds(100, 510, 180, 22);
+        getContentPane().add(txt_valorsaida);
+        txt_valorsaida.setBounds(140, 510, 180, 26);
 
         jLabel7.setText("Codigo de Barras");
         getContentPane().add(jLabel7);
         jLabel7.setBounds(570, 510, 110, 16);
-        getContentPane().add(barcodeTxt);
-        barcodeTxt.setBounds(680, 510, 120, 22);
+        getContentPane().add(txt_codigodebarras);
+        txt_codigodebarras.setBounds(680, 510, 120, 26);
 
-        validadeTxt.addActionListener(new java.awt.event.ActionListener() {
+        txt_validade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                validadeTxtActionPerformed(evt);
+                txt_validadeActionPerformed(evt);
             }
         });
-        getContentPane().add(validadeTxt);
-        validadeTxt.setBounds(680, 410, 190, 22);
+        getContentPane().add(txt_validade);
+        txt_validade.setBounds(680, 410, 190, 26);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txt_pesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_pesquisaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txt_pesquisaActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void bnt_removerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_removerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_bnt_removerActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void bnt_adicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_adicionarActionPerformed
         // TODO add your handling code here:
         cadastrarProduto();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_bnt_adicionarActionPerformed
 
-    private void saidaTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saidaTxtActionPerformed
+    private void txt_valorsaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_valorsaidaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_saidaTxtActionPerformed
+    }//GEN-LAST:event_txt_valorsaidaActionPerformed
 
-    private void validadeTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validadeTxtActionPerformed
+    private void txt_validadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_validadeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_validadeTxtActionPerformed
+    }//GEN-LAST:event_txt_validadeActionPerformed
+
+    private void txt_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pesquisaKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_pesquisaKeyReleased
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField barcodeTxt;
-    private javax.swing.JTextField entradaTxt;
+    private javax.swing.JButton bnt_adicionar;
+    private javax.swing.JButton bnt_editar;
+    private javax.swing.JButton bnt_remover;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -250,10 +266,12 @@ public class TelaProduto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField nomeTxt;
-    private javax.swing.JTextField quantTxt;
-    private javax.swing.JTextField saidaTxt;
-    private javax.swing.JTextField validadeTxt;
+    private javax.swing.JTextField txt_codigodebarras;
+    private javax.swing.JTextField txt_estoque;
+    private javax.swing.JTextField txt_nome;
+    private javax.swing.JTextField txt_pesquisa;
+    private javax.swing.JTextField txt_validade;
+    private javax.swing.JTextField txt_valorentrada;
+    private javax.swing.JTextField txt_valorsaida;
     // End of variables declaration//GEN-END:variables
 }
