@@ -249,7 +249,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
     // TODO add your handling code here:
-        TelaPedido pedido = new TelaPedido(); 
+        TelaPedido pedido = new TelaPedido(usuario); 
         pedido.setSize(Desktop.getWidth(), Desktop.getHeight());
         pedido.setLocation(0, 0); 
         pedido.setVisible(true);  
@@ -259,7 +259,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        TelaHistorico historico = new TelaHistorico(); 
+        TelaHistorico historico = new TelaHistorico(usuario); 
         historico.setSize(Desktop.getWidth(), Desktop.getHeight());
         historico.setLocation(0, 0); 
         historico.setVisible(true);  
@@ -298,7 +298,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
         // TODO add your handling code here:
-        TelaNotificacao notificacao = new TelaNotificacao();     
+        TelaNotificacao notificacao = new TelaNotificacao(usuario);     
         notificacao.setSize(Desktop.getWidth(), Desktop.getHeight());
         notificacao.setLocation(0, 0); 
         notificacao.setVisible(true);  

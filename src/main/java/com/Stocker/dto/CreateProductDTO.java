@@ -5,12 +5,12 @@ import java.util.Date;
 public class CreateProductDTO {
     private Long barcode;
     private String name;
-    private Integer purchasePrice;
-    private Integer sellingPrice;
+    private Double purchasePrice;
+    private Double sellingPrice;
     private int amount;
     private Date expiryDate;
     
-    public CreateProductDTO(Long barcode, String name, Integer purchasePrice, Integer sellingPrice, int amount,
+    public CreateProductDTO(Long barcode, String name, Double purchasePrice, Double sellingPrice, int amount,
                             Date expiryDate) {
         this.barcode = barcode;
         this.name = name;
@@ -20,7 +20,7 @@ public class CreateProductDTO {
         this.expiryDate = expiryDate;
     }
 
-    public CreateProductDTO(Long barcode, String name, Integer purchasePrice, Integer sellingPrice, int amount) {
+    public CreateProductDTO(Long barcode, String name, Double purchasePrice, Double sellingPrice, int amount) {
         this.barcode = barcode;
         this.name = name;
         this.purchasePrice = purchasePrice;
@@ -45,19 +45,19 @@ public class CreateProductDTO {
         this.name = name;
     }
 
-    public Integer getPurchasePrice() {
+    public Double getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(Integer purchasePrice) {
+    public void setPurchasePrice(Double purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 
-    public Integer getSellingPrice() {
+    public Double getSellingPrice() {
         return sellingPrice;
     }
 
-    public void setSellingPrice(Integer sellingPrice) {
+    public void setSellingPrice(Double sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
 

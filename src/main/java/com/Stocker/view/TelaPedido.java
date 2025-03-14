@@ -4,6 +4,13 @@
  */
 package com.Stocker.view;
 
+import java.util.List;
+
+import com.Stocker.entity.Product;
+import com.Stocker.entity.User;
+import com.Stocker.services.ProductService;
+import com.Stocker.services.SaleService;
+
 /**
  *
  * @author Tacio
@@ -13,9 +20,39 @@ public class TelaPedido extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaPedido
      */
-    public TelaPedido() {
+    User usuario;
+    
+    private ProductService productService;
+    private SaleService saleService;
+    private List<Product> produtos;
+  
+    public TelaPedido(User usuario) {
+        this.usuario = usuario;
+        productService = new ProductService(usuario);
+        saleService = new SaleService(usuario);
         initComponents();
     }
+
+    public void cadastrar_venda() {
+        int linhaSelecionada = tbl_pedidos.getSelectedRow(); 
+
+        if (linhaSelecionada != -1) { // Verifica se alguma linha foi selecionada
+            Product produtoSelecionado = produtos.get(linhaSelecionada);
+            int quantidade = Integer.parseInt(jTextField5.getText()); 
+
+            saleService.addToCart(produtoSelecionado, quantidade);
+            saleService.confirmSale();
+        } 
+    }
+
+    public void pesquisar_produtos() {
+        String nomePesquisa = txt_pesquisa.getText(); 
+        ProductService productService = new ProductService(usuario);  
+        produtos = productService.listProducts(nomePesquisa);    
+        
+        // Configura a tabela com o modelo personalizado
+        tbl_pedidos.setModel(new ProductTableModel(produtos));
+    }   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,17 +89,8 @@ public class TelaPedido extends javax.swing.JInternalFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(360, 40, 90, 27);
 
-        tbl_pedidos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        pesquisar_produtos();
+
         jScrollPane1.setViewportView(tbl_pedidos);
 
         getContentPane().add(jScrollPane1);
@@ -106,6 +134,8 @@ public class TelaPedido extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        cadastrar_venda();
+        pesquisar_produtos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

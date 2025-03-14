@@ -26,10 +26,10 @@ public class Product {
     private String name;
 
     @Column(name = "purchase_price")
-    private Integer purchasePrice;
+    private Double purchasePrice;
 
     @Column(name = "selling_price")
-    private Integer sellingPrice;
+    private Double sellingPrice;
 
     private Integer amount;
 
@@ -46,7 +46,7 @@ public class Product {
         
     public Product() {}
 
-    public Product(Long id, Long barcode, String name, Integer purchasePrice, Integer sellingPrice, Integer amount,
+    public Product(Long id, Long barcode, String name, Double purchasePrice, Double sellingPrice, Integer amount,
             Date expiryDate, User user, List<SupplierProduct> suppliers) {
         this.id = id;
         this.barcode = barcode;
@@ -84,19 +84,19 @@ public class Product {
         this.name = name;
     }
 
-    public Integer getPurchasePrice() {
+    public Double getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(Integer purchasePrice) {
+    public void setPurchasePrice(Double purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 
-    public Integer getSellingPrice() {
+    public Double getSellingPrice() {
         return sellingPrice;
     }
 
-    public void setSellingPrice(Integer sellingPrice) {
+    public void setSellingPrice(Double sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
 

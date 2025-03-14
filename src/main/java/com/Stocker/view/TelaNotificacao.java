@@ -4,7 +4,11 @@
  */
 package com.Stocker.view;
 
-import com.Stocker.entity.User; 
+import java.util.List;
+
+import com.Stocker.dto.Notification;
+import com.Stocker.entity.User;
+import com.Stocker.services.NotificationService; 
 
 /**
  *
@@ -15,11 +19,11 @@ public class TelaNotificacao extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaNotificação
      */
-    ;
+    private User usuario;
     
-    public TelaNotificacao() {
+    public TelaNotificacao(User usuario) {
+        this.usuario = usuario;
         initComponents();
-        
     } 
 
     /**
@@ -42,17 +46,9 @@ public class TelaNotificacao extends javax.swing.JInternalFrame {
         setResizable(true);
         getContentPane().setLayout(null);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        NotificationService notificationService = new NotificationService(usuario);
+        List<Notification> notificacoes = notificationService.execute();
+        jTable1.setModel(new NotificationTableModel(notificacoes));
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);

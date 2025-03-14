@@ -35,7 +35,7 @@ public class ProductServiceTest {
         userRepository = new UserRepository();
         
         mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null, null);
-        mockProduct = new Product(null, 154184L, "Sabonete", 1, 5, 24, new Date(), mockUser, null);
+        Product mockProduct = new Product(null, 87945L, "Sabão", 10.0, 20.0, 50, new Date(), mockUser, null);
 
         userRepository.save(mockUser);
         productRepository.save(mockProduct);

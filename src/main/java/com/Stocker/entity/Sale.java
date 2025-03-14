@@ -21,7 +21,7 @@ public class Sale {
 
     private Integer amount;
 
-    private Integer price;
+    private Double price;
 
     @Column(name = "date_sale")
     private Date date;
@@ -33,7 +33,7 @@ public class Sale {
 
     public Sale() {}
 
-    public Sale(Long id, Integer amount, Integer price, Date date, Product product) {
+    public Sale(Long id, Integer amount, Double price, Date date, Product product) {
         this.id = id;
         this.amount = amount;
         this.price = price;
@@ -58,11 +58,11 @@ public class Sale {
         this.amount = amount;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

@@ -4,6 +4,14 @@
  */
 package com.Stocker.view;
 
+import java.util.List;
+
+import com.Stocker.entity.Sale;
+import com.Stocker.entity.User;
+import com.Stocker.repository.SaleRepository;
+import com.Stocker.services.ProductService;
+import com.Stocker.services.SaleService;
+
 /**
  *
  * @author Tacio
@@ -13,9 +21,22 @@ public class TelaHistorico extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaHistorico
      */
-    public TelaHistorico() {
+    private User usuario;
+    private SaleService saleService;
+    private List<Sale> vendas;
+
+    public TelaHistorico(User usuario) {
+        this.usuario = usuario;
+        saleService = new SaleService(usuario);
         initComponents();
     }
+
+    public void listar_vendas() {
+        vendas = saleService.listSales();    
+        
+        // Configura a tabela com o modelo personalizado
+        tbl_historico.setModel(new SalesTableModel(vendas));
+    }  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,17 +67,8 @@ public class TelaHistorico extends javax.swing.JInternalFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(390, 30, 90, 27);
 
-        tbl_historico.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        listar_vendas();
+        
         jScrollPane1.setViewportView(tbl_historico);
 
         getContentPane().add(jScrollPane1);

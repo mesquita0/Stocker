@@ -37,7 +37,7 @@ public class SaleRepositoryTest {
         productRepository = new ProductRepository();
         userRepository = new UserRepository();
         mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null, null);
-        mockProduct = new Product(null, 154184L, "Sabonete", 1, 5, 20, new Date(), mockUser, null);
+        mockProduct = new Product(null, 154184L, "Sabonete", 1.0, 5.0, 20, new Date(), mockUser, null);
         mockSale = new Sale(null, 1, mockProduct.getSellingPrice(), new Date(), mockProduct);
 
         userRepository.save(mockUser);

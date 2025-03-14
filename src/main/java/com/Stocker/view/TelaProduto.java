@@ -31,8 +31,8 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         try{
            String nome = txt_nome.getText();
            Long barcode = Long.parseLong(txt_codigodebarras.getText());
-           Integer precoCompra = Integer.parseInt(txt_valorentrada.getText());
-           Integer precoVenda = Integer.parseInt(txt_valorsaida.getText());
+           Double precoCompra = Double.parseDouble(txt_valorentrada.getText());
+           Double precoVenda = Double.parseDouble(txt_valorsaida.getText());
            int quantidade = Integer.parseInt(txt_estoque.getText());
            
            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

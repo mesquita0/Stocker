@@ -43,7 +43,7 @@ public class ProductRepositoryTest {
         mockBarcode = 154184L;
         mockName = "Sabonete";
         mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null, null);
-        mockProduct = new Product(null, mockBarcode, mockName, 1, 5, 20, new Date(), mockUser, null);
+        mockProduct = new Product(null, mockBarcode, mockName, 1.0, 5.0, 20, new Date(), mockUser, null);
         
         userRepository.save(mockUser);
     }
@@ -115,7 +115,7 @@ public class ProductRepositoryTest {
     @Order(6)
     @DisplayName("Lista Produtos por fornecedor")
     void listProductBySupplier() {
-        Product newProduct    = new Product(null, 87945L, "Sabão", 10, 20, 50, new Date(), mockUser, null);
+        Product newProduct    = new Product(null, 87945L, "Sabão", 10.0, 20.0, 50, new Date(), mockUser, null);
         Supplier mockSupplier  = new Supplier(null, mockName, "111", mockUser, null);
         SupplierProduct mockSP = new SupplierProduct(newProduct, mockSupplier, 3, 1);
 
