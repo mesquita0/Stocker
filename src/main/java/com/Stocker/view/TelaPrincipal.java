@@ -44,7 +44,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jFrame2 = new javax.swing.JFrame();
         Desktop = new javax.swing.JDesktopPane();
         Menu = new javax.swing.JMenuBar();
-        menu_usuario = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         menu_fornecedores = new javax.swing.JMenu();
@@ -105,32 +104,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGap(0, 347, Short.MAX_VALUE)
         );
 
-        menu_usuario.setText("Usuário");
-        menu_usuario.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
-            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
-                menu_usuarioMenuKeyPressed(evt);
-            }
-            public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
-            }
-            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
-            }
-        });
-        menu_usuario.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                menu_usuarioMenuSelected(evt);
-            }
-        });
-        menu_usuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu_usuarioMouseClicked(evt);
-            }
-        });
-        Menu.add(menu_usuario);
-
         jMenu4.setText("Notificações");
         jMenu4.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
             public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
@@ -190,7 +163,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Menu.add(menu_fornecedores);
 
-        jMenu7.setText("Pedidos");
+        jMenu7.setText("Vendas");
 
         jMenuItem3.setText("Fazer Pedido");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -212,6 +185,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu7.add(jMenuItem4);
+
+        jMenuItem7.setText("Carrinho");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem7);
 
         Menu.add(jMenu7);
 
@@ -238,14 +219,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void menu_fornecedoresMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menu_fornecedoresMenuSelected
         // TODO add your handling code here:
     }//GEN-LAST:event_menu_fornecedoresMenuSelected
-
-    private void menu_usuarioMenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_menu_usuarioMenuKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menu_usuarioMenuKeyPressed
-
-    private void menu_usuarioMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menu_usuarioMenuSelected
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menu_usuarioMenuSelected
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
     // TODO add your handling code here:
@@ -305,16 +278,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Desktop.add(notificacao);   
         notificacao.toFront();
     }//GEN-LAST:event_jMenu4MouseClicked
-
-    private void menu_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_usuarioMouseClicked
-        // TODO add your handling code here:
-        TelaUsuario usuario = new TelaUsuario();   
-        usuario.setSize(Desktop.getWidth(), Desktop.getHeight());
-        usuario.setLocation(0, 0); 
-        usuario.setVisible(true);  
-        Desktop.add(usuario);    
-        usuario.toFront();
-    }//GEN-LAST:event_menu_usuarioMouseClicked
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
         // TODO add your handling code here:
@@ -385,6 +348,5 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JMenu menu_fornecedores;
-    private javax.swing.JMenu menu_usuario;
     // End of variables declaration//GEN-END:variables
 }

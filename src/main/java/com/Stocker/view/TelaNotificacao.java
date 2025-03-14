@@ -37,8 +37,6 @@ public class TelaNotificacao extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -54,21 +52,11 @@ public class TelaNotificacao extends javax.swing.JInternalFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(60, 30, 760, 406);
 
-        jButton1.setText("Excluir Tudo");
-        getContentPane().add(jButton1);
-        jButton1.setBounds(680, 490, 140, 27);
-
-        jButton2.setText("Limpar Notificação");
-        getContentPane().add(jButton2);
-        jButton2.setBounds(680, 450, 140, 27);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

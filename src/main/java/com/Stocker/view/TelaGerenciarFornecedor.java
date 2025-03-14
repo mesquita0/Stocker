@@ -31,11 +31,13 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
     }
     
     public void pesquisar_fornecedores(){ 
-        String nomePesquisa = txt_pesquisa.getText(); 
-        fornecedores = supplierService.listSuppliers(nomePesquisa);    
-        
-        // Configura a tabela com o modelo personalizado
-        tbl_gerenciarfornecedores.setModel(new SupplierTableModel(fornecedores));
+        int linhaSelecionada = tbl_gerenciarfornecedores.getSelectedRow(); 
+
+        if (linhaSelecionada != -1) { // Verifica se alguma linha foi selecionada
+            Supplier fornecedor = fornecedores.get(linhaSelecionada);
+            txt_nome.setText(fornecedor.getName());
+            txt_cnpj.setText(fornecedor.getCnpj());
+        } 
     }
     
     public void setar_campos(){ 
@@ -83,7 +85,18 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
         } 
     }
 
-    
+    public void editar_fornecedor(){
+        int linhaSelecionada = tbl_gerenciarfornecedores.getSelectedRow();
+        
+        if (linhaSelecionada != -1){
+            Supplier fornecedorSelecionado = fornecedores.get(linhaSelecionada);
+            fornecedorSelecionado.setName(txt_nome.getText());
+            fornecedorSelecionado.setCnpj(txt_cnpj.getText());
+             supplierService.updateSupplier(fornecedorSelecionado);
+        }
+            
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -195,6 +208,7 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        editar_fornecedor();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txt_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pesquisaKeyReleased
