@@ -57,12 +57,12 @@ public class SupplierProduct {
     @Column(name = "delivery_time")
     private Integer deliveryTimeDays;
 
-    private Integer price;
+    private Double price;
     
     
     public SupplierProduct() {}
 
-    public SupplierProduct(Product product, Supplier supplier, Integer deliveryTimeDays, Integer price) {
+    public SupplierProduct(Product product, Supplier supplier, Integer deliveryTimeDays, Double price) {
         this.productId = product.getId();
         this.product = product;
         this.supplierId = supplier.getId();
@@ -102,11 +102,11 @@ public class SupplierProduct {
         this.deliveryTimeDays = deliveryTimeDays;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 }

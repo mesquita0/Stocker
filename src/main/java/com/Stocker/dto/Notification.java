@@ -13,9 +13,9 @@ public class Notification {
     }
 
     public String toString() {
-        return "O estoque do produto " + product.getName() + " acabará nos proximos " +
-        String.valueOf(sales) + " dias, porém o fornecedor mais rápido entregará" +
-        " o produto em " + String.valueOf(numDaysSales) + " dias.";
+        return "O estoque de " + product.getName() + " acabará nos proximos " +
+        String.valueOf(this.getNumDaysRemainingStock()) + " dias, porém o fornecedor mais " +
+        "rápido entregará o produto em " + String.valueOf(this.getMinDeliveryTime()) + " dias.";
     }
 
     public Product getProduct() {

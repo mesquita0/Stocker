@@ -85,7 +85,7 @@ public class TelaFornecedor extends javax.swing.JInternalFrame {
                 fornecedor, 
                 produto,
                 Integer.parseInt(tempoEntrega), 
-                Integer.parseInt(preco)
+                Double.parseDouble(preco)
             );
 
            SupplierProduct novoSP = spService.createSupplierProduct(createSP);

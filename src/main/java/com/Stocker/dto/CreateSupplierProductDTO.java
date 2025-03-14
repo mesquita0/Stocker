@@ -6,10 +6,11 @@ import com.Stocker.entity.Supplier;
 public class CreateSupplierProductDTO {
     private Supplier supplier;
     private Product product;
-    private Integer deliveryTime, price;
+    private Integer deliveryTime;
+    private Double price;
 
 
-    public CreateSupplierProductDTO(Supplier supplier, Product product, Integer deliveryTime, Integer price) {
+    public CreateSupplierProductDTO(Supplier supplier, Product product, Integer deliveryTime, Double price) {
         this.supplier = supplier;
         this.product = product;
         this.deliveryTime = deliveryTime;
@@ -41,11 +42,11 @@ public class CreateSupplierProductDTO {
         this.deliveryTime = deliveryTime;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 }

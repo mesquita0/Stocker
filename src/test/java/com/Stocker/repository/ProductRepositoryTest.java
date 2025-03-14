@@ -117,7 +117,7 @@ public class ProductRepositoryTest {
     void listProductBySupplier() {
         Product newProduct    = new Product(null, 87945L, "Sabão", 10.0, 20.0, 50, new Date(), mockUser, null);
         Supplier mockSupplier  = new Supplier(null, mockName, "111", mockUser, null);
-        SupplierProduct mockSP = new SupplierProduct(newProduct, mockSupplier, 3, 1);
+        SupplierProduct mockSP = new SupplierProduct(newProduct, mockSupplier, 3, 1.0);
 
         productRepository.save(newProduct);
         supplierRepository.save(mockSupplier);

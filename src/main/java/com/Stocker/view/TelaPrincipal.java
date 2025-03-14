@@ -165,7 +165,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu7.setText("Vendas");
 
-        jMenuItem3.setText("Fazer Pedido");
+        jMenuItem3.setText("Cadastrar Venda");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -185,14 +185,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu7.add(jMenuItem4);
-
-        jMenuItem7.setText("Carrinho");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
-        jMenu7.add(jMenuItem7);
 
         Menu.add(jMenu7);
 

@@ -79,6 +79,12 @@ public class TelaPedido extends javax.swing.JInternalFrame {
         getContentPane().add(txt_pesquisa);
         txt_pesquisa.setBounds(60, 40, 290, 22);
 
+        txt_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_pesquisaKeyReleased(evt);
+            }
+        });
+
         jButton1.setText("Pesquisar");
         getContentPane().add(jButton1);
         jButton1.setBounds(360, 40, 90, 23);
@@ -96,7 +102,7 @@ public class TelaPedido extends javax.swing.JInternalFrame {
         getContentPane().add(jTextField5);
         jTextField5.setBounds(140, 370, 310, 22);
 
-        jButton2.setText("Adicionar ao carrinho");
+        jButton2.setText("Cadastrar venda");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -113,6 +119,11 @@ public class TelaPedido extends javax.swing.JInternalFrame {
         cadastrar_venda();
         pesquisar_produtos();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txt_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pesquisaKeyReleased
+        // TODO add your handling code here:
+        pesquisar_produtos();
+    }//GEN-LAST:event_txt_pesquisaKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -80,8 +80,8 @@ public class TelaProduto extends javax.swing.JInternalFrame {
             Product produtoSelecionado = produtos.get(linhaSelecionada);
             produtoSelecionado.setName(txt_nome.getText());
             produtoSelecionado.setBarcode(Long.parseLong(txt_codigodebarras.getText()));
-            produtoSelecionado.setPurchasePrice(Integer.parseInt(txt_valorentrada.getText()));
-            produtoSelecionado.setSellingPrice(Integer.parseInt(txt_valorsaida.getText()));
+            produtoSelecionado.setPurchasePrice(Double.parseDouble(txt_valorentrada.getText()));
+            produtoSelecionado.setSellingPrice(Double.parseDouble(txt_valorsaida.getText()));
             produtoSelecionado.setAmount(Integer.parseInt(txt_estoque.getText()));
            
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -199,17 +199,8 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(446, 30, 90, 23);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        pesquisar_produtos();
+        
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -320,6 +311,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
     private void bnt_adicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_adicionarActionPerformed
         // TODO add your handling code here:
         cadastrarProduto();
+        pesquisar_produtos();
     }//GEN-LAST:event_bnt_adicionarActionPerformed
 
     private void txt_valorsaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_valorsaidaActionPerformed
