@@ -11,6 +11,9 @@ import com.Stocker.services.ProductService;
 import com.Stocker.entity.Product;
 import com.Stocker.entity.User;
 import com.Stocker.dto.CreateProductDTO;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -69,6 +72,43 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         // Configura a tabela com o modelo personalizado
         jTable1.setModel(new ProductTableModel(produtos));
     }   
+    
+    public void editar_produtos(){
+        int linhaSelecionada = jTable1.getSelectedRow(); 
+
+        if (linhaSelecionada != -1) { // Verifica se alguma linha foi selecionada
+            Product produtoSelecionado = produtos.get(linhaSelecionada);
+            produtoSelecionado.setName(txt_nome.getText());
+            produtoSelecionado.setBarcode(Long.parseLong(txt_codigodebarras.getText()));
+            produtoSelecionado.setPurchasePrice(Integer.parseInt(txt_valorentrada.getText()));
+            produtoSelecionado.setSellingPrice(Integer.parseInt(txt_valorsaida.getText()));
+            produtoSelecionado.setAmount(Integer.parseInt(txt_estoque.getText()));
+           
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            
+            try {
+                produtoSelecionado.setExpiryDate(sdf.parse(txt_validade.getText()));
+            } catch (ParseException ex) {
+                Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+           
+            if(produtoSelecionado != null){
+               JOptionPane.showMessageDialog(this, "Produto editado!");
+               txt_nome.setText(null);
+               txt_codigodebarras.setText(null);
+               txt_valorentrada.setText(null);
+               txt_valorsaida.setText(null);
+               txt_estoque.setText(null);
+               txt_validade.setText(null);
+           } else {
+               JOptionPane.showMessageDialog(this, "Preencha os campos corretamente!", "erro",JOptionPane.ERROR_MESSAGE );
+               
+           }
+            
+            productService.updateProduct(produtoSelecionado);
+        } 
+    }
 
     public void setar_campos() {
         int linhaSelecionada = jTable1.getSelectedRow(); 
@@ -147,22 +187,29 @@ public class TelaProduto extends javax.swing.JInternalFrame {
                 txt_pesquisaActionPerformed(evt);
             }
         });
-
         txt_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_pesquisaKeyReleased(evt);
             }
         });
-
-        pesquisar_produtos();
-
         getContentPane().add(txt_pesquisa);
-        txt_pesquisa.setBounds(25, 30, 415, 26);
+        txt_pesquisa.setBounds(25, 30, 415, 22);
 
         jButton1.setText("Pesquisar");
         getContentPane().add(jButton1);
-        jButton1.setBounds(446, 30, 90, 27);
+        jButton1.setBounds(446, 30, 90, 23);
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -189,11 +236,11 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel5);
         jLabel5.setBounds(620, 460, 42, 20);
         getContentPane().add(txt_nome);
-        txt_nome.setBounds(140, 410, 350, 26);
+        txt_nome.setBounds(140, 410, 350, 22);
         getContentPane().add(txt_valorentrada);
-        txt_valorentrada.setBounds(140, 460, 172, 26);
+        txt_valorentrada.setBounds(140, 460, 172, 22);
         getContentPane().add(txt_estoque);
-        txt_estoque.setBounds(680, 460, 68, 26);
+        txt_estoque.setBounds(680, 460, 64, 22);
 
         bnt_adicionar.setText("Adicionar");
         bnt_adicionar.setToolTipText("");
@@ -205,13 +252,18 @@ public class TelaProduto extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(bnt_adicionar);
-        bnt_adicionar.setBounds(170, 580, 85, 27);
+        bnt_adicionar.setBounds(170, 580, 81, 23);
 
         bnt_editar.setText("Editar");
         bnt_editar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bnt_editar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bnt_editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnt_editarActionPerformed(evt);
+            }
+        });
         getContentPane().add(bnt_editar);
-        bnt_editar.setBounds(600, 580, 76, 27);
+        bnt_editar.setBounds(600, 580, 72, 23);
 
         bnt_remover.setText("Remover");
         bnt_remover.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -222,7 +274,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(bnt_remover);
-        bnt_remover.setBounds(980, 570, 81, 27);
+        bnt_remover.setBounds(980, 570, 77, 23);
 
         jLabel2.setText("Valor Saida");
         getContentPane().add(jLabel2);
@@ -234,13 +286,13 @@ public class TelaProduto extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(txt_valorsaida);
-        txt_valorsaida.setBounds(140, 510, 180, 26);
+        txt_valorsaida.setBounds(140, 510, 180, 22);
 
         jLabel7.setText("Codigo de Barras");
         getContentPane().add(jLabel7);
         jLabel7.setBounds(570, 510, 110, 16);
         getContentPane().add(txt_codigodebarras);
-        txt_codigodebarras.setBounds(680, 510, 120, 26);
+        txt_codigodebarras.setBounds(680, 510, 120, 22);
 
         txt_validade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -248,7 +300,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(txt_validade);
-        txt_validade.setBounds(680, 410, 190, 26);
+        txt_validade.setBounds(680, 410, 190, 22);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -287,6 +339,12 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         setar_campos();
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void bnt_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_editarActionPerformed
+        // TODO add your handling code here:
+        editar_produtos();
+        pesquisar_produtos();
+    }//GEN-LAST:event_bnt_editarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

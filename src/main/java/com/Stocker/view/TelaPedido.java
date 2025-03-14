@@ -30,13 +30,7 @@ public class TelaPedido extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_pedidos = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
 
@@ -46,11 +40,11 @@ public class TelaPedido extends javax.swing.JInternalFrame {
         setResizable(true);
         getContentPane().setLayout(null);
         getContentPane().add(txt_pesquisa);
-        txt_pesquisa.setBounds(60, 40, 290, 26);
+        txt_pesquisa.setBounds(60, 40, 290, 22);
 
         jButton1.setText("Pesquisar");
         getContentPane().add(jButton1);
-        jButton1.setBounds(360, 40, 90, 27);
+        jButton1.setBounds(360, 40, 90, 23);
 
         tbl_pedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -68,29 +62,11 @@ public class TelaPedido extends javax.swing.JInternalFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(60, 90, 1000, 240);
 
-        jLabel1.setText("Nome");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(120, 370, 50, 16);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(160, 370, 320, 26);
-
-        jLabel2.setText("Valor");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(127, 420, 30, 16);
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(160, 420, 320, 26);
-
-        jLabel3.setText("Estoque");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(620, 370, 60, 16);
-
         jLabel4.setText("Quantidade");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(600, 420, 70, 16);
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(670, 370, 310, 26);
+        jLabel4.setBounds(60, 370, 70, 16);
         getContentPane().add(jTextField5);
-        jTextField5.setBounds(670, 420, 310, 26);
+        jTextField5.setBounds(140, 370, 310, 22);
 
         jButton2.setText("Adicionar ao carrinho");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +75,7 @@ public class TelaPedido extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(910, 480, 148, 30);
+        jButton2.setBounds(530, 370, 144, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -112,14 +88,8 @@ public class TelaPedido extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTable tbl_pedidos;
     private javax.swing.JTextField txt_pesquisa;
