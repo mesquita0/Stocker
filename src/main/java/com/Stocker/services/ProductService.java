@@ -33,6 +33,10 @@ public class ProductService {
         return productRepository.save(newProduct);
     }
 
+    public List<Product> getByBarcode(Long barcode) {
+        return productRepository.getByBarcode(barcode);
+    }
+
     public List<Product> listProducts(String name) {
         return productRepository.getAll(user, name);
     }

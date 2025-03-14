@@ -7,9 +7,7 @@ package com.Stocker.view;
 import com.Stocker.services.SupplierService;
 import com.Stocker.entity.Supplier;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;  
 import com.Stocker.entity.User; 
-import com.Stocker.repository.SupplierRepository;
 import java.util.List;
 
 /**
@@ -24,41 +22,35 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
     User usuario; 
     
     private SupplierService supplierService;  
+    private List<Supplier> fornecedores;
      
     public TelaGerenciarFornecedor(User usuario) {
-        initComponents();   
         this.usuario = usuario;   
         supplierService = new SupplierService(usuario);     
+        initComponents();   
     }
     
     public void pesquisar_fornecedores(){ 
         String nomePesquisa = txt_pesquisa.getText(); 
-        SupplierService supplierservice = new SupplierService(usuario);  
-        List<Supplier> fornecedores = supplierservice.listSuppliers(nomePesquisa);    
+        fornecedores = supplierService.listSuppliers(nomePesquisa);    
         
-        
-        //Limpar tabela
-        DefaultTableModel modeloTabela = (DefaultTableModel) tbl_gerenciarfornecedores.getModel();  
-        modeloTabela.setRowCount(0);
-        
-        //Adicionar o resultado a tabela
-        for (Supplier fornecedor : fornecedores) {
-        modeloTabela.addRow(new Object[]{
-            fornecedor.getId(),
-            fornecedor.getName(),
-            fornecedor.getCnpj()
-        });
-        }
+        // Configura a tabela com o modelo personalizado
+        tbl_gerenciarfornecedores.setModel(new SupplierTableModel(fornecedores));
     }
     
     public void setar_campos(){ 
         int linhaSelecionada = tbl_gerenciarfornecedores.getSelectedRow(); 
 
-    if (linhaSelecionada != -1) { // Verifica se alguma linha foi selecionada
-        txt_id.setText(tbl_gerenciarfornecedores.getValueAt(linhaSelecionada, 0).toString());
-        txt_nome.setText(tbl_gerenciarfornecedores.getValueAt(linhaSelecionada, 1).toString());
-        txt_cnpj.setText(tbl_gerenciarfornecedores.getValueAt(linhaSelecionada, 2).toString());
-    } 
+        if (linhaSelecionada != -1) { // Verifica se alguma linha foi selecionada
+            Supplier fornecedor = fornecedores.get(linhaSelecionada);
+            txt_nome.setText(fornecedor.getName());
+            txt_cnpj.setText(fornecedor.getCnpj());
+        } 
+    }
+
+    public void resetar_campos() {
+        txt_nome.setText("");
+        txt_cnpj.setText("");
     }
     
     public void adicionar_fornecedor(){
@@ -84,7 +76,11 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
     }
     
     public void remover_fornecedor(){
-        
+        int linhaSelecionada = tbl_gerenciarfornecedores.getSelectedRow(); 
+
+        if (linhaSelecionada != -1) {
+            supplierService.deleteSupplier(fornecedores.get(linhaSelecionada));
+        } 
     }
 
     
@@ -129,22 +125,14 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(410, 40, 90, 27);
 
-        tbl_gerenciarfornecedores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
         tbl_gerenciarfornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbl_gerenciarfornecedoresMouseClicked(evt);
             }
         });
+
+        pesquisar_fornecedores();
+
         jScrollPane1.setViewportView(tbl_gerenciarfornecedores);
 
         getContentPane().add(jScrollPane1);
@@ -200,6 +188,9 @@ public class TelaGerenciarFornecedor extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here: 
+        remover_fornecedor();
+        pesquisar_fornecedores();
+        resetar_campos();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

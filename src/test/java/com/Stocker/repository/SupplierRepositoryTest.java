@@ -43,7 +43,7 @@ public class SupplierRepositoryTest {
         spRepository = new SupplierProductRepository();
         mockName = "teste";
         
-        mockUser = new User(null, "Pablo", "111.111.111-11", "a@gmail.com", "123456", "(84)99999-9999", null, null);
+        mockUser = new User(null, "Pablo", "111.111.111-11", "admin", "admin", "(84)99999-9999", null, null);
         mockProduct = new Product(null, 154184L, "Sabonete", 1, 5, 20, new Date(), mockUser, null);
         mockSupplier = new Supplier(null, mockName, "111", mockUser, null);
         mockSP = new SupplierProduct(mockProduct, mockSupplier, 3, 1);

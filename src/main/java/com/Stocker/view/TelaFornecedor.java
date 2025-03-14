@@ -4,11 +4,19 @@
  */
 package com.Stocker.view;
 
+import com.Stocker.dto.CreateSupplierProductDTO;
+import com.Stocker.entity.Product;
 import com.Stocker.entity.Supplier;
+import com.Stocker.entity.SupplierProduct;
 import com.Stocker.entity.User;
+import com.Stocker.services.ProductService;
+import com.Stocker.services.SupplierProductService;
 import com.Stocker.services.SupplierService;
+
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,32 +29,94 @@ public class TelaFornecedor extends javax.swing.JInternalFrame {
      */
     User usuario; 
     
+    SupplierProductService spService;
     private SupplierService supplierService;
+    private List<Supplier> fornecedores;
+    private Supplier fornecedor;
     
     public TelaFornecedor(User usuario) {
-        initComponents();
         this.usuario = usuario;   
         supplierService = new SupplierService(usuario);
+        spService = new SupplierProductService();
+        initComponents();
     }
     
     public void pesquisar_fornecedores(){ 
         String nomePesquisa = txt_pesquisa.getText(); 
-        SupplierService supplierservice = new SupplierService(usuario);   
-        List<Supplier> fornecedores = supplierservice.listSuppliers(nomePesquisa);    
+        fornecedores = supplierService.listSuppliers(nomePesquisa);    
         
-        
-        //Limpar tabela
-        DefaultTableModel modeloTabela = (DefaultTableModel) tbl_fornecedores.getModel();  
-        modeloTabela.setRowCount(0);
-        
-        //Adicionar o resultado a tabela
-        for (Supplier fornecedor : fornecedores) {
-        modeloTabela.addRow(new Object[]{
-            fornecedor.getId(),
-            fornecedor.getName(),
-            fornecedor.getCnpj()
-        });
+        // Configura a tabela com o modelo personalizado
+        tbl_fornecedores.setModel(new SupplierTableModel(fornecedores));
+    }
+    
+    public void setar_produtos() {
+        int linhaSelecionada = tbl_fornecedores.getSelectedRow(); 
+
+        if (linhaSelecionada != -1) { // Verifica se alguma linha foi selecionada
+            fornecedor = fornecedores.get(linhaSelecionada);
+            
+            // Configura a tabela com o modelo personalizado
+            tbl_produtosfornecedor.setModel(new SupplierProductTableModel(fornecedor.getProducts()));
         }
+    }
+
+    public void setar_produto_fornecedor() {
+        int linhaSelecionada = tbl_produtosfornecedor.getSelectedRow(); 
+
+        if (linhaSelecionada != -1) { // Verifica se alguma linha foi selecionada
+            SupplierProduct sp = fornecedor.getProducts().get(linhaSelecionada);
+            
+            txt_codigodebarras.setText(sp.getProduct().getBarcode().toString());
+            txt_preco.setText(sp.getPrice().toString());
+            txt_tempodeentrega.setText(sp.getDeliveryTimeDays().toString());
+        }
+    }
+
+    public void adcionar_produto_fornecedor() {
+        try{
+           String codigoBarras = txt_codigodebarras.getText();
+           String tempoEntrega = txt_tempodeentrega.getText();
+           String preco = txt_preco.getText();
+
+           ProductService productService = new ProductService(usuario);
+           Product produto = productService.getByBarcode(Long.parseLong(codigoBarras)).get(0);
+           
+           CreateSupplierProductDTO createSP = new CreateSupplierProductDTO(
+                fornecedor, 
+                produto,
+                Integer.parseInt(tempoEntrega), 
+                Integer.parseInt(preco)
+            );
+
+           SupplierProduct novoSP = spService.createSupplierProduct(createSP);
+           
+           if(novoSP != null){ 
+               JOptionPane.showMessageDialog(this, "Fornecedor cadastrado!");
+               resetar_campos();
+
+           } else {
+               JOptionPane.showMessageDialog(this, "Preencha os campos corretamente!", "erro",JOptionPane.ERROR_MESSAGE );
+               
+           }
+                 
+        } catch(Exception e){
+             JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void remover_produto_fornecedor() {
+        int linhaSelecionada = tbl_produtosfornecedor.getSelectedRow(); 
+
+        if (linhaSelecionada != -1) { // Verifica se alguma linha foi selecionada
+            SupplierProduct sp = fornecedor.getProducts().get(linhaSelecionada);
+            spService.deleteSupplierProduct(sp);
+        }
+    }
+
+    public void resetar_campos() {
+        txt_codigodebarras.setText("");
+        txt_preco.setText("");
+        txt_tempodeentrega.setText("");
     }
 
     /**
@@ -63,11 +133,15 @@ public class TelaFornecedor extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_fornecedores = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbl_produtosfornecedor = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        txt_preco = new javax.swing.JTextField();
+        bnt_adicionar = new javax.swing.JButton();
+        bnt_remover = new javax.swing.JButton();
+        txt_codigodebarras = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txt_tempodeentrega = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -88,80 +162,114 @@ public class TelaFornecedor extends javax.swing.JInternalFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(451, 23, 84, 27);
 
-        tbl_fornecedores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        pesquisar_fornecedores();
+
+        tbl_fornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_fornecedoresMouseClicked(evt);
             }
-        ));
+        });
         jScrollPane1.setViewportView(tbl_fornecedores);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(30, 69, 1228, 160);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        tbl_produtosfornecedor.setModel(new SupplierProductTableModel(new ArrayList<SupplierProduct>()));
+
+        tbl_produtosfornecedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_produtosfornecedorMouseClicked(evt);
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        });
+        jScrollPane2.setViewportView(tbl_produtosfornecedor);
 
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(30, 250, 1230, 260);
 
-        jLabel1.setText("Codigo de Barras");
+        jLabel1.setText("Preço");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(40, 530, 100, 16);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(150, 530, 220, 26);
+        jLabel1.setBounds(1000, 530, 40, 20);
+        getContentPane().add(txt_preco);
+        txt_preco.setBounds(1040, 530, 220, 26);
 
-        jButton2.setText("Adicionar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        bnt_adicionar.setText("Adicionar");
+        bnt_adicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                bnt_adicionarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(150, 600, 100, 27);
+        getContentPane().add(bnt_adicionar);
+        bnt_adicionar.setBounds(150, 600, 100, 27);
 
-        jButton3.setText("Remover");
-        getContentPane().add(jButton3);
-        jButton3.setBounds(280, 600, 90, 27);
+        bnt_remover.setText("Remover");
+        getContentPane().add(bnt_remover);
+        bnt_remover.setBounds(280, 600, 90, 27);
+
+        bnt_remover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnt_removerActionPerformed(evt);
+            }
+        });
+
+        getContentPane().add(txt_codigodebarras);
+        txt_codigodebarras.setBounds(150, 530, 220, 26);
+
+        jLabel2.setText("Codigo de Barras");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(50, 530, 110, 20);
+        getContentPane().add(txt_tempodeentrega);
+        txt_tempodeentrega.setBounds(600, 530, 220, 26);
+
+        jLabel3.setText("Tempo de Entrega");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(500, 530, 100, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void bnt_adicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_adicionarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        adcionar_produto_fornecedor();
+        pesquisar_fornecedores();
+    }//GEN-LAST:event_bnt_adicionarActionPerformed
+
+    private void bnt_removerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_adicionarActionPerformed
+        // TODO add your handling code here:
+        remover_produto_fornecedor();
+        pesquisar_fornecedores();
+        resetar_campos();
+    }//GEN-LAST:event_bnt_adicionarActionPerformed
 
     private void txt_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pesquisaKeyReleased
         // TODO add your handling code here:
         pesquisar_fornecedores(); 
     }//GEN-LAST:event_txt_pesquisaKeyReleased
 
+    private void tbl_produtosfornecedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_produtosfornecedorMouseClicked
+        // TODO add your handling code here:
+        setar_produto_fornecedor();
+    }//GEN-LAST:event_tbl_produtosfornecedorMouseClicked
+
+    private void tbl_fornecedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_fornecedoresMouseClicked
+        // TODO add your handling code here:
+        setar_produtos();
+    }//GEN-LAST:event_tbl_fornecedoresMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bnt_adicionar;
+    private javax.swing.JButton bnt_remover;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tbl_fornecedores;
+    private javax.swing.JTable tbl_produtosfornecedor;
+    private javax.swing.JTextField txt_codigodebarras;
     private javax.swing.JTextField txt_pesquisa;
+    private javax.swing.JTextField txt_preco;
+    private javax.swing.JTextField txt_tempodeentrega;
     // End of variables declaration//GEN-END:variables
 }

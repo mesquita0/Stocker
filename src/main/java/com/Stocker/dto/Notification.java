@@ -12,6 +12,10 @@ public class Notification {
         this.numDaysSales = numDaysSales;
     }
 
+    public String toString() {
+        return "";
+    }
+
     public Product getProduct() {
         return product;
     }

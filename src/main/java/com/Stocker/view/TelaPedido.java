@@ -26,10 +26,10 @@ public class TelaPedido extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        txt_pesquisa = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_pedidos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -39,21 +39,20 @@ public class TelaPedido extends javax.swing.JInternalFrame {
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         getContentPane().setLayout(null);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(80, 40, 236, 26);
+        getContentPane().add(txt_pesquisa);
+        txt_pesquisa.setBounds(60, 40, 290, 26);
 
         jButton1.setText("Pesquisar");
         getContentPane().add(jButton1);
-        jButton1.setBounds(320, 40, 90, 27);
+        jButton1.setBounds(360, 40, 90, 27);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_pedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -64,34 +63,34 @@ public class TelaPedido extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_pedidos);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(60, 90, 1000, 240);
 
         jLabel1.setText("Nome");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(110, 370, 33, 16);
+        jLabel1.setBounds(120, 370, 50, 16);
         getContentPane().add(jTextField2);
-        jTextField2.setBounds(160, 370, 200, 26);
+        jTextField2.setBounds(160, 370, 320, 26);
 
         jLabel2.setText("Valor");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(110, 420, 27, 16);
+        jLabel2.setBounds(127, 420, 30, 16);
         getContentPane().add(jTextField3);
-        jTextField3.setBounds(160, 420, 200, 26);
+        jTextField3.setBounds(160, 420, 320, 26);
 
         jLabel3.setText("Estoque");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(690, 370, 60, 16);
+        jLabel3.setBounds(620, 370, 60, 16);
 
         jLabel4.setText("Quantidade");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(700, 430, 70, 16);
+        jLabel4.setBounds(600, 420, 70, 16);
         getContentPane().add(jTextField4);
-        jTextField4.setBounds(750, 370, 200, 26);
+        jTextField4.setBounds(670, 370, 310, 26);
         getContentPane().add(jTextField5);
-        jTextField5.setBounds(770, 430, 190, 26);
+        jTextField5.setBounds(670, 420, 310, 26);
 
         jButton2.setText("Adicionar ao carrinho");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -100,16 +99,7 @@ public class TelaPedido extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(1000, 370, 148, 30);
-
-        jButton3.setText("Ir para o carrinho");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton3);
-        jButton3.setBounds(1090, 590, 150, 27);
+        jButton2.setBounds(910, 480, 148, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -118,26 +108,20 @@ public class TelaPedido extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jButton3ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTable tbl_pedidos;
+    private javax.swing.JTextField txt_pesquisa;
     // End of variables declaration//GEN-END:variables
 }

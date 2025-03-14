@@ -31,7 +31,7 @@ public class Product {
     @Column(name = "selling_price")
     private Integer sellingPrice;
 
-    private int amount;
+    private Integer amount;
 
     @Column(name = "expiry_date")
     private Date expiryDate;
@@ -46,7 +46,7 @@ public class Product {
         
     public Product() {}
 
-    public Product(Long id, Long barcode, String name, Integer purchasePrice, Integer sellingPrice, int amount,
+    public Product(Long id, Long barcode, String name, Integer purchasePrice, Integer sellingPrice, Integer amount,
             Date expiryDate, User user, List<SupplierProduct> suppliers) {
         this.id = id;
         this.barcode = barcode;
@@ -100,11 +100,11 @@ public class Product {
         this.sellingPrice = sellingPrice;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 

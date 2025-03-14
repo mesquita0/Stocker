@@ -5,6 +5,8 @@
 package com.Stocker.view;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 import com.Stocker.services.ProductService;
 import com.Stocker.entity.Product;
 import com.Stocker.entity.User;
@@ -22,7 +24,8 @@ public class TelaProduto extends javax.swing.JInternalFrame {
      */
     User usuario;
     
-     private ProductService productService;
+    private ProductService productService;
+    private List<Product> produtos;
     
     public void cadastrarProduto(){
         try{
@@ -58,16 +61,50 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         }
     }
     
-    
-    
-    
+    public void pesquisar_produtos() {
+        String nomePesquisa = txt_pesquisa.getText(); 
+        ProductService productService = new ProductService(usuario);  
+        produtos = productService.listProducts(nomePesquisa);    
         
-    
+        // Configura a tabela com o modelo personalizado
+        jTable1.setModel(new ProductTableModel(produtos));
+    }   
+
+    public void setar_campos() {
+        int linhaSelecionada = jTable1.getSelectedRow(); 
+
+        if (linhaSelecionada != -1) { // Verifica se alguma linha foi selecionada
+            Product produtoSelecionado = produtos.get(linhaSelecionada);
+            txt_nome.setText(produtoSelecionado.getName());
+            txt_codigodebarras.setText(produtoSelecionado.getBarcode().toString());
+            txt_valorentrada.setText(produtoSelecionado.getPurchasePrice().toString());
+            txt_valorsaida.setText(produtoSelecionado.getSellingPrice().toString());
+            txt_estoque.setText(produtoSelecionado.getAmount().toString());
+            txt_validade.setText(produtoSelecionado.getExpiryDate().toString());
+        } 
+    }
+
+    public void resetar_campos() {
+        txt_nome.setText("");
+        txt_codigodebarras.setText("");
+        txt_valorentrada.setText("");
+        txt_valorsaida.setText("");
+        txt_estoque.setText("");
+        txt_validade.setText("");
+    }
+
+    public void remover_produto() {
+        int linhaSelecionada = jTable1.getSelectedRow(); 
+
+        if (linhaSelecionada != -1) {
+            productService.deleteProduct(produtos.get(linhaSelecionada));
+        } 
+    }
     
     public TelaProduto(User usuario) {
-        initComponents();
         this.usuario = usuario;
         productService = new ProductService(usuario);
+        initComponents();
     }
 
     /**
@@ -110,11 +147,15 @@ public class TelaProduto extends javax.swing.JInternalFrame {
                 txt_pesquisaActionPerformed(evt);
             }
         });
+
         txt_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_pesquisaKeyReleased(evt);
             }
         });
+
+        pesquisar_produtos();
+
         getContentPane().add(txt_pesquisa);
         txt_pesquisa.setBounds(25, 30, 415, 26);
 
@@ -122,17 +163,6 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(446, 30, 90, 27);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -225,10 +255,14 @@ public class TelaProduto extends javax.swing.JInternalFrame {
 
     private void txt_pesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_pesquisaActionPerformed
         // TODO add your handling code here:
+        pesquisar_produtos();
     }//GEN-LAST:event_txt_pesquisaActionPerformed
 
     private void bnt_removerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_removerActionPerformed
         // TODO add your handling code here:
+        remover_produto();
+        pesquisar_produtos();
+        resetar_campos();
     }//GEN-LAST:event_bnt_removerActionPerformed
 
     private void bnt_adicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_adicionarActionPerformed
@@ -246,10 +280,12 @@ public class TelaProduto extends javax.swing.JInternalFrame {
 
     private void txt_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pesquisaKeyReleased
         // TODO add your handling code here:
+        pesquisar_produtos();
     }//GEN-LAST:event_txt_pesquisaKeyReleased
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
+        setar_campos();
     }//GEN-LAST:event_jTable1MouseClicked
 
 

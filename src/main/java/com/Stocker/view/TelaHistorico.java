@@ -27,10 +27,10 @@ public class TelaHistorico extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txt_pesquisar = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_historico = new javax.swing.JTable();
 
         jTextField1.setText("jTextField1");
 
@@ -39,14 +39,14 @@ public class TelaHistorico extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         getContentPane().setLayout(null);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(30, 30, 350, 26);
+        getContentPane().add(txt_pesquisar);
+        txt_pesquisar.setBounds(30, 30, 350, 26);
 
         jButton1.setText("Pesquisar");
         getContentPane().add(jButton1);
         jButton1.setBounds(390, 30, 90, 27);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_historico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -57,7 +57,7 @@ public class TelaHistorico extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_historico);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(30, 80, 1110, 406);
@@ -69,8 +69,8 @@ public class TelaHistorico extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tbl_historico;
+    private javax.swing.JTextField txt_pesquisar;
     // End of variables declaration//GEN-END:variables
 }
